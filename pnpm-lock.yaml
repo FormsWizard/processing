@@ -196,6 +196,9 @@ importers:
       '@mui/material':
         specifier: ^5.13.6
         version: 5.13.6(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@17.0.2)
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       material-react-table:
         specifier: ^1.14.0
         version: 1.14.0(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.11.16)(@mui/material@5.13.6)(react-dom@18.2.0)(react@17.0.2)
@@ -8190,7 +8193,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}

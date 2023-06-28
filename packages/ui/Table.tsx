@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { MaterialReactTable, type MRT_Cell } from 'material-react-table';
+import * as _ from 'lodash'
 
 type Person = {
   firstName: string;
@@ -101,8 +102,7 @@ export const Table = ({
   const [tableData, setTableData] = useState(data);
 
   const handleSaveCell = (cell: MRT_Cell<Person>, value: any) => {
-    //@ts-ignore
-    tableData[cell.row.index][cell.column.id] = value;  // TODO nested Data
+    _.set(tableData[cell.row.index], cell.column.id, value)  // allows cell.column.id to be an accessorKey of nested Data
     setTableData([...tableData]);
   };
 
