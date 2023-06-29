@@ -1,10 +1,10 @@
-import { Button, Header } from "ui";
+import { TableWithProvider, Header } from "ui";
 
 export default function Page() {
   return (
     <>
       <Header text="Docs" />
-      <Button />
+      <TableWithProvider />
     </>
   );
 }
