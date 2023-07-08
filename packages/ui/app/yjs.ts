@@ -23,6 +23,5 @@ function createDoc(room: string) {
 
 export function createAndBind(store: Store, room: string) {
   const ydoc = createDoc(room)
-  console.log({ydoc})
   bind(ydoc, store, room);
 }

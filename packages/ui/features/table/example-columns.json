@@ -1,0 +1,27 @@
+[
+  {
+    "accessorKey": "name.firstName",
+    "header": "First Name",
+    "size": 150
+  },
+  {
+    "accessorKey": "name.lastName",
+    "header": "Last Name",
+    "size": 150
+  },
+  {
+    "accessorKey": "address",
+    "header": "Address",
+    "size": 200
+  },
+  {
+    "accessorKey": "city",
+    "header": "City",
+    "size": 150
+  },
+  {
+    "accessorKey": "state",
+    "header": "State",
+    "size": 150
+  }
+]

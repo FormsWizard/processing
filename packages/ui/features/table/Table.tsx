@@ -4,9 +4,11 @@ import { useMemo } from 'react';
 import { MaterialReactTable, type MRT_Cell } from 'material-react-table';
 import * as _ from 'lodash'
 
-import { useAppSelector, useAppDispatch } from './app/hooks';
-import { setTableData, setCell, selectTableData, Person } from './features/table/tableSlice';
- 
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { setTableData, setCell, selectTableData, Person } from './tableSlice';
+
+import example_columns from './example-columns.json'
+
 export interface TableProps {
   label?: string;
 }
@@ -16,37 +18,9 @@ export const Table = ({}: TableProps) => {
   const dispatch = useAppDispatch();
 
   const columns = useMemo(
-    () => [
-      {
-        accessorKey: 'name.firstName', //access nested data with dot notation
-        header: 'First Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'name.lastName',
-        header: 'Last Name',
-        size: 150,
-      },
-      {
-        accessorKey: 'address', //normal accessorKey
-        header: 'Address',
-        size: 200,
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-        size: 150,
-      },
-      {
-        accessorKey: 'state',
-        header: 'State',
-        size: 150,
-      },
-    ],
+    () => example_columns,
     [],
   );
-
-//  const [tableData, setTableData] = useState(data);
 
   const handleSaveCell = (cell: MRT_Cell<Person>, value: any) => {
     dispatch(setCell([tableData, cell.row.index, cell.column.id, value]))

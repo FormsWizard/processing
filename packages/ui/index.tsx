@@ -1,7 +1,5 @@
 import * as React from "react";
 
 // component exports
-export * from "./TableWithProvider";
-export * from "./Table";
-export * from "./Button";
-export * from "./Header";
+export * from "./features/table/TableWithProvider";
+export * from "./features/table/Table";
