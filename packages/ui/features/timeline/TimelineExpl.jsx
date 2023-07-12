@@ -1,4 +1,4 @@
-
+import { useCallback } from 'react'
 
 import Timeline from "react-visjs-timeline";
 
@@ -10,11 +10,16 @@ import { setCell, selectTableData } from '../table/tableSlice';
 
 
 /** Calculate a timeline event from a row of table data **/
-function eventFromRow(row) {
-  return { id: row.id, content: row.name.lastName, start: row.arrivalDate, end: row.departureDate }
+function eventFromRow(row, index) {
+  return { id: row.id,
+	   content: row.name.lastName,
+	   start: row.arrivalDate,
+	   end: row.departureDate,
+	   _rowIdx: index  /** by keeping the index, during updates we save an O(n) lookup that would be required using the id **/
+         }
 }
 
-const tlOptions = {
+const defaultOptions = {
   stack: true,
   horizontalScroll: true,
   zoomable: true,
@@ -28,8 +33,8 @@ const tlOptions = {
 function createOnMove(dispatch) {
   return (item, callback) => {
     /** TODO we could use a reducer, that is setting both dates in one dispatch **/
-    dispatch(setCell([item.id, "arrivalDate", item.start?.toISOString()]));
-    dispatch(setCell([item.id, "departureDate", item.end?.toISOString()]));
+    dispatch(setCell([item._rowIdx, "arrivalDate", item.start?.toISOString()]));
+    dispatch(setCell([item._rowIdx, "departureDate", item.end?.toISOString()]));
     callback(item);
   }
 }
@@ -41,9 +46,11 @@ export function TimelineExpl() {
   const items = tableData.map(eventFromRow)
 		         .filter(event => event.start);  /** entries with missing start are not valid **/
 
+  const onMove = useCallback(createOnMove(dispatch), [dispatch]);
+
   const options = {
-    onMove: createOnMove(dispatch),
-    ...tlOptions
+    onMove,
+    ...defaultOptions
   };
 
   return (
