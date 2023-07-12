@@ -1,48 +1,63 @@
 [
   {
+    "id": 0,
     "name": {
       "firstName": "John",
       "lastName": "Doe"
     },
     "address": "261 Erdman Ford",
     "city": "East Daphne",
-    "state": "Kentucky"
+    "state": "Kentucky",
+    "arrivalDate": "2022-04-07",
+    "departureDate": "2023-12-03"
   },
   {
+    "id": 1,
     "name": {
       "firstName": "Jane",
       "lastName": "Doe"
     },
     "address": "769 Dominic Grove",
     "city": "Columbus",
-    "state": "Ohio"
+    "state": "Ohio",
+    "arrivalDate": "2023-04-07",
+    "departureDate": "2023-12-03"
   },
   {
+    "id": 2,
     "name": {
       "firstName": "Joe",
       "lastName": "Doe"
     },
     "address": "566 Brakus Inlet",
     "city": "South Linda",
-    "state": "West Virginia"
+    "state": "West Virginia",
+    "arrivalDate": "2022-04-07",
+    "departureDate": "2023-12-03"
   },
   {
+    "id": 3,
     "name": {
       "firstName": "Kevin",
       "lastName": "Vandy"
     },
     "address": "722 Emie Stream",
     "city": "Lincoln",
-    "state": "Nebraska"
+    "state": "Nebraska",
+    "arrivalDate": "2022-06-07",
+    "departureDate": "2023-10-03"
   },
   {
+    "id": 4,
     "name": {
       "firstName": "Joshua",
       "lastName": "Rolluffs"
     },
     "address": "32188 Larkin Turnpike",
     "city": "Charleston",
-    "state": "South Carolina"
+    "state": "South Carolina",
+    "arrivalDate": "2023-07-07",
+    "departureDate": "2023-08-03"
   }
 ]
 

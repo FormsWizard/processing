@@ -23,5 +23,15 @@
     "accessorKey": "state",
     "header": "State",
     "size": 150
+  },
+  {
+    "accessorKey": "arrivalDate",
+    "header": "Arrival Date",
+    "size": 150
+  },
+  {
+    "accessorKey": "departureDate",
+    "header": "Departure Date",
+    "size": 150
   }
 ]

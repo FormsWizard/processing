@@ -3,6 +3,9 @@
 import React, { Component } from "react";
 import Timeline from "react-visjs-timeline";
 
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { setTableData, setCell, selectTableData, Person } from '../table/tableSlice';
+
 // refer
 // https://visjs.github.io/vis-timeline/examples/timeline/basicUsage.html
 // manage options:
@@ -55,19 +58,20 @@ const tlOptions = {
   // zoomMax: 1000 * 60 * 60 * 24,
 };
 
-export class TimelineExpl extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      options: tlOptions,
-      items: tlItems
-    };
-  }
+function eventFromRow (row) {
+  return  {id: row.id,  content: row.name.lastName, start: row.arrivalDate, }
+}
 
-  render() {
-    const { items, options } = this.state;
-    return (
+
+export function TimelineExpl () {
+
+  const tableData = useAppSelector(selectTableData);
+
+  const options = tlOptions;
+  const items = tableData.map(eventFromRow);
+
+  return(
       <div>
         <h1>Example 1</h1>
         <h4>
@@ -75,12 +79,11 @@ export class TimelineExpl extends Component {
           items.
         </h4>
         <Timeline
-          ref={node => (this.tl = node)}
           options={options}
           items={items}
         />
         <div><p>the end</p></div>
       </div>
     );
-  }
 }
+
