@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 
 // @ts-ignore
 import Timeline from "react-visjs-timeline";
@@ -52,8 +52,12 @@ export function TimelineExpl() {
   const tableData = useAppSelector(selectTableData);
   const dispatch = useAppDispatch();
 
-  const items = tableData.map(eventFromRow)
-		         .filter(event => event.start);  /** entries with missing start are not valid **/
+  const [items, setItems] = useState<Item[]>([])
+  useEffect( () => {
+    setItems( tableData.map(eventFromRow)
+                       .filter(event => event.start)  /** entries with missing start are not valid **/
+	    )
+  }, [tableData])
 
   const onMove = useCallback(createOnMove(dispatch), [dispatch]);
 
@@ -65,7 +69,7 @@ export function TimelineExpl() {
   return (
     <div>
       <Timeline
-        options={defaultOptions as any}
+        options={options}
         items={items}
       />
     </div>
