@@ -5,7 +5,7 @@ import { useReducer, createContext, ReactNode, useContext, useEffect, useCallbac
 import { Provider } from 'react-redux';
 import { store } from '../../app/store';
 import { Table, TableProps } from './Table';
-import { TimelineExpl } from './timeline/TimelineExpl';
+import { TimelineExpl } from '../timeline/TimelineExpl';
 
 import * as Y from 'yjs'
 import { WebrtcProvider } from 'y-webrtc'
