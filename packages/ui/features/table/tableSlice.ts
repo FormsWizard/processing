@@ -32,8 +32,10 @@ export const tableSlice = createSlice({
       state.data = action.payload;
     },
     setCell: (state, action: PayloadAction<any>) => {
-      const [tableData, rowIndex, columnId, newValue] = action.payload;
-      var tableDataClone = _.cloneDeep(tableData)
+     
+      const [rowIndex, columnId, newValue] = action.payload;
+
+      var tableDataClone = _.cloneDeep(state.data)
       _.set(tableDataClone[rowIndex], columnId, newValue);
       state.data = tableDataClone;
     }

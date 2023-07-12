@@ -46,44 +46,72 @@ const tlItems = [
 //   selectable: true
 // };
 
+
+//Update Table from TimelineData
+function createOnMove(dispatch) {
+  return (item, callback) => {
+    console.log("moved", item.start.toISOString());
+
+    dispatch(setCell([item.id, "arrivalDate", item.start.toISOString()]));
+    dispatch(setCell([item.id, "departureDate", item.end.toISOString()]));
+
+    callback(item);
+  }
+}
+
+// TODO: - Zeitspanne interaktiv aendern, rechtsklick evtl, event loeschen, neues Event anlegen, Name im Timetable editieren, sortieren in Timeline nach typeVar (groupings),
+// TODO: Tabledata show only visible timetabledata, Tabledata show only selected timetabledata visaversa
+
 const tlOptions = {
   stack: true,
   horizontalScroll: true,
-  zoomable: false,
+  zoomable: true,
   zoomKey: "ctrlKey",
   orientation: { axis: "top" },
-  timeAxis: { scale: "day", step: 1 },
-  // editable: true,
+  // timeAxis: { scale: "month", step: 1 },
+  editable: true,
   // zoomMin: 1000 * 60 * 60,
   // zoomMax: 1000 * 60 * 60 * 24,
 };
 
 
-function eventFromRow (row) {
-  return  {id: row.id,  content: row.name.lastName, start: row.arrivalDate, }
+//get tableData for timeline
+function eventFromRow(row) {
+  return { id: row.id, content: row.name.lastName, start: row.arrivalDate, end: row.departureDate }
+}
+
+//get timelineZoomData for table
+//TODO: Get only TableData if TableData.start >= timelineStart || TableData.end <= timelineEnd
+function eventGetTimelineZoomData() {
+  // const visibleTimelineRangeStart = 
+  // const visibleTimelineRangeEnd =
+
+  return {}
+
 }
 
 
-export function TimelineExpl () {
+
+export function TimelineExpl() {
 
   const tableData = useAppSelector(selectTableData);
+  const dispatch = useAppDispatch();
 
-  const options = tlOptions;
+  const options = {
+    onMove: createOnMove(dispatch),
+    ...tlOptions
+  };
   const items = tableData.map(eventFromRow);
 
-  return(
-      <div>
-        <h1>Example 1</h1>
-        <h4>
-          A basic timeline. You can move and zoom the timeline, and select
-          items.
-        </h4>
-        <Timeline
-          options={options}
-          items={items}
-        />
-        <div><p>the end</p></div>
-      </div>
-    );
+  console.warn(getSelection());
+
+  return (
+    <div>
+      <Timeline
+        options={options}
+        items={items}
+      />
+    </div>
+  );
 }
 

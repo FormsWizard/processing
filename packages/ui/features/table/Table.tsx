@@ -23,7 +23,7 @@ export const Table = ({}: TableProps) => {
   );
 
   const handleSaveCell = (cell: MRT_Cell<Person>, value: any) => {
-    dispatch(setCell([tableData, cell.row.index, cell.column.id, value]))
+    dispatch(setCell([cell.row.index, cell.column.id, value]))
   };
 
   return <MaterialReactTable

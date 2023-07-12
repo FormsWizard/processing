@@ -5,7 +5,7 @@ import { useReducer, createContext, ReactNode, useContext, useEffect, useCallbac
 import { Provider } from 'react-redux';
 import { store } from '../../app/store';
 import { Table, TableProps } from './Table';
-import { TimelineExpl } from '../timeline/TimelineExpl';
+import { TimelineExpl } from './timeline/TimelineExpl';
 
 import * as Y from 'yjs'
 import { WebrtcProvider } from 'y-webrtc'
@@ -153,8 +153,8 @@ export const TableWithProvider = ({
            <YProvider initialYState={{room: 'exampleRoom',
 	                              webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
 	     <TestConsumer/>
+       <Table/>
        <TimelineExpl/>
-	     <Table/>
 	   </YProvider>
          </Provider>;
 };
