@@ -1,16 +1,25 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
+// @ts-ignore
 import Timeline from "react-visjs-timeline";
+import { DateType, TimelineItem, TimelineOptions } from "vis-timeline";
+import { Moment } from 'moment';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { AppDispatch } from '../../app/store';
 import { setCell, selectTableData } from '../table/tableSlice';
 
 // TODO: - Zeitspanne interaktiv aendern, rechtsklick evtl, event loeschen, neues Event anlegen, Name im Timetable editieren, sortieren in Timeline nach typeVar (groupings),
 // TODO: Tabledata show only visible timetabledata, Tabledata show only selected timetabledata visaversa
 
+interface Item extends TimelineItem {
+  start: DateType&Moment,
+  end: DateType&Moment,
+  _rowIdx: number
+}
 
 /** Calculate a timeline event from a row of table data **/
-function eventFromRow(row, index) {
+function eventFromRow(row: any, index: number) {
   return { id: row.id,
 	   content: row.name.lastName,
 	   start: row.arrivalDate,
@@ -19,19 +28,19 @@ function eventFromRow(row, index) {
          }
 }
 
-const defaultOptions = {
+const defaultOptions: TimelineOptions = {
   stack: true,
   horizontalScroll: true,
   zoomable: true,
-  zoomKey: "ctrlKey",
+  zoomKey: 'ctrlKey',
   orientation: { axis: "top" },
   // timeAxis: { scale: "month", step: 1 },
   editable: true,
 };
 
 /** Creates an onMove callback to update table data when timeline item was moved **/
-function createOnMove(dispatch) {
-  return (item, callback) => {
+function createOnMove(dispatch: AppDispatch) {
+  return (item: Item, callback: any) => {
     /** TODO we could use a reducer, that is setting both dates in one dispatch **/
     dispatch(setCell([item._rowIdx, "arrivalDate", item.start?.toISOString()]));
     dispatch(setCell([item._rowIdx, "departureDate", item.end?.toISOString()]));
@@ -56,7 +65,7 @@ export function TimelineExpl() {
   return (
     <div>
       <Timeline
-        options={options}
+        options={defaultOptions as any}
         items={items}
       />
     </div>
