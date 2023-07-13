@@ -27,11 +27,17 @@
   {
     "accessorKey": "arrivalDate",
     "header": "Arrival Date",
-    "size": 150
+    "size": 150,
+    "muiTableBodyCellEditTextFieldProps": {
+      "type": "datetime-local"
+    }
   },
   {
     "accessorKey": "departureDate",
     "header": "Departure Date",
-    "size": 150
+    "size": 150,
+    "muiTableBodyCellEditTextFieldProps": {
+      "type": "datetime-local"
+    }
   }
 ]

@@ -38,12 +38,14 @@ const defaultOptions: TimelineOptions = {
   editable: true,
 };
 
-/** Creates an onMove callback to update table data when timeline item was moved **/
+/** Creates an onMove callback to update table data when timeline item was moved.
+ *  The time is stored in format of html-input of type datetime-local
+ **/
 function createOnMove(dispatch: AppDispatch) {
   return (item: Item, callback: any) => {
     /** TODO we could use a reducer, that is setting both dates in one dispatch **/
-    dispatch(setCell([item._rowIdx, "arrivalDate", item.start?.toISOString()]));
-    dispatch(setCell([item._rowIdx, "departureDate", item.end?.toISOString()]));
+    dispatch(setCell([item._rowIdx, "arrivalDate", item.start?.toISOString().slice(0, 19)]));
+    dispatch(setCell([item._rowIdx, "departureDate", item.end?.toISOString().slice(0, 19)]));
     callback(item);
   }
 }
