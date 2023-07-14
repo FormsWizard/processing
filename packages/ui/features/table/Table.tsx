@@ -5,7 +5,7 @@ import { MaterialReactTable, type MRT_Cell } from 'material-react-table';
 import * as _ from 'lodash'
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setCell, selectTableData, Person } from './tableSlice';
+import { selectTableData, setCell, selectTableState, Person } from './tableSlice';
 
 import example_columns from './example-columns.json'
 
@@ -18,6 +18,7 @@ export const Table = ({}: TableProps) => {
   //console.log(tableInstanceRef)
 
   const tableData = useAppSelector(selectTableData);
+  const tableState = useAppSelector(selectTableState);
   const dispatch = useAppDispatch();
 
   const columns = useMemo(
@@ -35,6 +36,7 @@ export const Table = ({}: TableProps) => {
            //@ts-ignore
            columns={columns}
            data={tableData}
+           state={tableState}
 
            enableColumnResizing
            enablePinning

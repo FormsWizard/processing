@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useMemo } from 'react'
 
 // @ts-ignore
 import Timeline from "react-visjs-timeline";
@@ -7,7 +7,7 @@ import { Moment } from 'moment';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { AppDispatch } from '../../app/store';
-import { setCell, selectTableData } from '../table/tableSlice';
+import { selectTableData, setCell, setRowSelection } from '../table/tableSlice';
 
 import mapping from './example-mapping.json';
 import * as _ from 'lodash';
@@ -23,7 +23,6 @@ interface Item extends TimelineItem {
 
 /** Calculate a timeline event from a row of table data **/
 function eventFromRow(row: any, index: number) {
-  console.log(row)
   return { id: row.id,
 	   content: _.get(row, mapping.content),
 	   start: _.get(row, mapping.start),
@@ -38,8 +37,9 @@ const defaultOptions: TimelineOptions = {
   zoomable: true,
   zoomKey: 'ctrlKey',
   orientation: { axis: "top" },
-  // timeAxis: { scale: "month", step: 1 },
   editable: true,
+  multiselect: true,
+  // timeAxis: { scale: "month", step: 1 },
 };
 
 /** Creates an onMove callback to update table data when timeline item was moved.
@@ -54,18 +54,26 @@ function createOnMove(dispatch: AppDispatch) {
   }
 }
 
+function createOnSelect(dispatch: AppDispatch, items: Item[]) {
+  /** Calc the index of the table rows belonging to the selected timeline items **/
+  return (args: {items: number[]}) => {
+    /** `args.items` are indices of `items` **/
+    const selectedRows = args.items.map(idx => items[idx]._rowIdx);
+    const rowSelection = Object.fromEntries(selectedRows.map(i => [i, true]));
+    dispatch(setRowSelection(rowSelection));
+  }
+}
+
 export function TimelineExpl() {
   const tableData = useAppSelector(selectTableData);
   const dispatch = useAppDispatch();
 
-  const [items, setItems] = useState<Item[]>([])
-  useEffect( () => {
-    setItems( tableData.map(eventFromRow)
-                       .filter(event => event.start)  /** entries with missing start are not valid **/
-	    )
-  }, [tableData])
+  const items = useMemo( () => tableData.map(eventFromRow)
+                                        .filter(event => event.start)  /** entries with missing start are not valid **/
+                         , [tableData] );
 
   const onMove = useCallback(createOnMove(dispatch), [dispatch]);
+  const onSelect = useCallback(() => createOnSelect(dispatch, items), [dispatch, items]);
 
   const options = {
     onMove,
@@ -77,6 +85,7 @@ export function TimelineExpl() {
       <Timeline
         options={options}
         items={items}
+	selectHandler={onSelect()}
       />
     </div>
   );
