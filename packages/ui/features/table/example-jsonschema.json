@@ -1,0 +1,34 @@
+{
+  jsonSchema: {
+    type: 'object',
+    properties: {
+      gruppe: {
+        type: 'object',
+        properties: {}
+      },
+      Textfeld: {
+        type: 'string'
+      },s
+      Textfeld_1: {
+        type: 'string'
+      },
+      Datumszeitfeld: {
+        type: 'string',
+        format: 'date-time'
+      },
+      Textfeld_2: {
+        type: 'string'
+      },
+      Textfeld_3: {
+        type: 'string'
+      },
+      Textfeld_4: {
+        type: 'string'
+      },
+      Datumszeitfeld_1: {
+        type: 'string',
+        format: 'date-time'
+      }
+    }
+  }
+}
