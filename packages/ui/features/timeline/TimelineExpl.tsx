@@ -58,12 +58,17 @@ export function TimelineExpl() {
   const tableData = useAppSelector(selectTableData);
   const dispatch = useAppDispatch();
 
+  const [forceRerender, setForceRerender] = useState(false)
+  useEffect(() => {setTimeout(() => {if(forceRerender) { setForceRerender(false) }}, 10)}, [forceRerender, setForceRerender])
+
+
   const [items, setItems] = useState<Item[]>([])
   useEffect( () => {
-    setItems( tableData.map(eventFromRow)
+  const newItems =  tableData.map(eventFromRow)
                        .filter(event => event.start)  /** entries with missing start are not valid **/
-	    )
-  }, [tableData])
+    setItems(newItems)
+      console.log({newItems})
+  }, [tableData, setItems])
 
   const onMove = useCallback(createOnMove(dispatch), [dispatch]);
 
@@ -72,12 +77,20 @@ export function TimelineExpl() {
     ...defaultOptions
   };
 
+  useEffect(() => {
+    console.log({items})
+    setForceRerender(true)
+    }, [items, setForceRerender])
+
+  const onSelect = useCallback(() => {console.log("Ping", items)}, [items])
+
   return (
     <div>
-      <Timeline
+     {!forceRerender  &&  <Timeline
         options={options}
         items={items}
-      />
+        selectHandler={onSelect}
+      />}
     </div>
   );
 }
