@@ -63,6 +63,5 @@ export const Table = ({}: TableProps) => {
                });
 	     }
            })}
-
          />;
 };

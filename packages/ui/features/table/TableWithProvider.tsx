@@ -10,6 +10,15 @@ import { WebrtcProvider } from 'y-webrtc';
 import { bind } from 'redux-yjs-bindings';
 
 import { Form } from '../form/Form';
+import { Layout } from '../layout/Layout';
+
+import PlaceIcon from '@mui/icons-material/Place';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
+import ViewWeekIcon from '@mui/icons-material/ViewWeek';
+import HubIcon from '@mui/icons-material/Hub';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 type YState = any;
 
@@ -144,18 +153,32 @@ function TestConsumer() {
   return <>{JSON.stringify(Object.keys(YState))}</>
 }
 
+const notYetImplemented = <p>Not Yet Implemented</p>;
+
+const tabs = [{icon: <PlaceIcon/>, label: "Map", content: notYetImplemented},
+	      {icon: <CalendarMonthIcon/>, label: "Calendar", content: notYetImplemented},
+              {icon: <AccessTimeIcon/>, label: "Timeline", content: <TimelineExpl/>},
+	      {icon: <ViewWeekIcon/>, label: "Kanban", content: notYetImplemented},
+	      {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
+	      {icon: <HubIcon/>, label: "Network", content: notYetImplemented},
+	      {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented}]
+
 export const TableWithProvider = ({
   label = "Foo",
 }: TableProps) => {
-  console.log('Outer')
+
+  const title = 'FormsWizard Processing';
 
   return <Provider store={store}>
            <YProvider initialYState={{room: 'exampleRoom',
 	                              webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
+	     <Layout title={ title }
+	             drawer={ <Form/> }
+		     tabs={ tabs }
+             >
+               <Table/>
+	     </Layout>
 	     <TestConsumer/>
-             <Form/>
-             <Table/>
-             <TimelineExpl/>
 	   </YProvider>
          </Provider>;
 };
