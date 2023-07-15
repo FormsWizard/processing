@@ -1,34 +1,33 @@
 {
-  jsonSchema: {
-    type: 'object',
-    properties: {
-      gruppe: {
-        type: 'object',
-        properties: {}
-      },
-      Textfeld: {
-        type: 'string'
-      },s
-      Textfeld_1: {
-        type: 'string'
-      },
-      Datumszeitfeld: {
-        type: 'string',
-        format: 'date-time'
-      },
-      Textfeld_2: {
-        type: 'string'
-      },
-      Textfeld_3: {
-        type: 'string'
-      },
-      Textfeld_4: {
-        type: 'string'
-      },
-      Datumszeitfeld_1: {
-        type: 'string',
-        format: 'date-time'
+  "type":"object",
+  "properties": {
+    "name": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type":"string"
+        }
       }
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type":"string"
+    },
+    "state": {
+      "type":"string"
+    },
+    "arrivalDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "departureDate": {
+      "type": "string",
+      "format": "date-time"
     }
   }
 }

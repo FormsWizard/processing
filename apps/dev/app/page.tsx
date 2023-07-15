@@ -1,6 +1,6 @@
 "use client";
 
-import { TableWithProvider } from '../components/TableWithoutSSR';
+import { TableWithProvider } from 'ui';
 
 export default function Page() {
   return (

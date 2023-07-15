@@ -1,5 +1,3 @@
-"use client";
-
 import { useReducer, createContext, ReactNode, useContext, useEffect, useCallback, useMemo } from 'react';
 
 import { Provider } from 'react-redux';
@@ -7,9 +5,11 @@ import { store } from '../../app/store';
 import { Table, TableProps } from './Table';
 import { TimelineExpl } from '../timeline/TimelineExpl';
 
-import * as Y from 'yjs'
-import { WebrtcProvider } from 'y-webrtc'
+import * as Y from 'yjs';
+import { WebrtcProvider } from 'y-webrtc';
 import { bind } from 'redux-yjs-bindings';
+
+import { Form } from '../form/Form';
 
 type YState = any;
 
@@ -153,8 +153,9 @@ export const TableWithProvider = ({
            <YProvider initialYState={{room: 'exampleRoom',
 	                              webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
 	     <TestConsumer/>
-       <Table/>
-       <TimelineExpl/>
+             <Form/>
+             <Table/>
+             <TimelineExpl/>
 	   </YProvider>
          </Provider>;
 };
