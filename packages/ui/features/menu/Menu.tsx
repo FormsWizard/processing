@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState, ReactElement } from 'react';
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import MuiMenu from '@mui/material/Menu';
@@ -6,13 +6,14 @@ import MuiMenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import ShareIcon from '@mui/icons-material/Share';
-import SettingsIcon from '@mui/icons-material/Settings';
-import HelpIcon from '@mui/icons-material/Help';
 
-function MenuItem({text, icon, disabled=false}: {text?: string, icon?: ReactNode, disabled?: boolean}) {
+export type Item = {
+  text?: string,
+  icon?: ReactElement,
+  disabled?: boolean
+}
+
+export function MenuItem({text, icon, disabled=false}: Item) {
   if(!text || text=='-')
     return <Divider/>;
   else
@@ -24,7 +25,7 @@ function MenuItem({text, icon, disabled=false}: {text?: string, icon?: ReactNode
     );
 }
 
-export default function Menu() {
+export function Menu({items}: {items: Item[]}) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,15 +34,6 @@ export default function Menu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const menuItems = [{text: "Import Dataset", icon: <FileOpenIcon fontSize="small"/>, disabled: true},
-                     {text: "Download Dataset", icon: <FileDownloadIcon fontSize="small"/>, disabled: true},
-                     {text: "Share Dataset", icon: <ShareIcon fontSize="small"/>, disabled: true},
-                     {},
-                     {text: "Settings", icon: <SettingsIcon fontSize="small"/>, disabled: true},
-                     {},
-                     {text: "Help", icon: <HelpIcon fontSize="small"/>, disabled: false},
-                     ];
 
   return (
     <>
@@ -58,6 +50,7 @@ export default function Menu() {
       >
         <MenuIcon/>
       </IconButton>
+
       <MuiMenu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -67,7 +60,7 @@ export default function Menu() {
           'aria-labelledby': 'menu',
         }}
       >
-        { menuItems.map((item, idx) => <MenuItem key={'menuItem'+idx} text={item.text} icon={item.icon} disabled={item.disabled}/>) }
+        { items.map((item, idx) => <MenuItem key={'menuItem'+idx} text={item.text} icon={item.icon} disabled={item.disabled}/>) }
       </MuiMenu>
     </>
   );

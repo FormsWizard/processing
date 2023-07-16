@@ -1,13 +1,13 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import ProcessingMenu from '../menu/ProcessingMenu'
+
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Menu from '../menu/Menu'
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -39,7 +39,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                 </>;
 
   const toolbar = <>
-                    <Menu/>
+                    <ProcessingMenu/>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                       { title }
                     </Typography>
@@ -49,7 +49,9 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
   const tabIdx = 2;
   const tabContent = tabs[tabIdx].content;
 
-  return <Box sx={{ display: 'flex' }}>
+  const toolbarPlaceholder = <Toolbar/>;  // prevent the AppBar from being in front of our content
+
+  return <Box sx={{ /*display: 'flex'*/ }}>
            <AppBar position="fixed">
 	     <Toolbar variant="dense">
 	       { toolbar }
@@ -70,7 +72,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                open
 	       anchor={'right'}
              >
-               <Box><Toolbar/>{ drawer }</Box>
+               <Box>{ toolbarPlaceholder }{ drawer }</Box>
              </Drawer>
 
              <Box
@@ -82,11 +84,12 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                     }
                    }}
              >
-               { children }
+               { toolbarPlaceholder }
+	       { children }
 
                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                  <Tabs value={ tabIdx } /*onChange={handleChange}*/>
-                   { tabs.map( t => <Tab icon={t.icon} label={t.label} /> ) }
+                   { tabs.map( (tab, idx) => {console.log(idx); return <Tab key={'tab'+idx} icon={tab.icon} label={tab.label} />} ) }
                  </Tabs>
                </Box>
 	       { tabContent }
