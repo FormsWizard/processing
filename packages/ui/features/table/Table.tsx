@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useRef } from 'react';
-import { MaterialReactTable, type MRT_Cell } from 'material-react-table';
+import { MaterialReactTable, MRT_Cell } from 'material-react-table';
 import * as _ from 'lodash'
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectTableData, setCell, selectTableState, Person } from './tableSlice';
+import { selectTableData, setCell, selectTableState, setRowSelection, Person } from './tableSlice';
 
 import example_columns from './example-columns.json'
 
@@ -51,8 +51,11 @@ export const Table = ({}: TableProps) => {
            })}
 
            muiTableBodyCellProps={({ table, column, cell }) => ({
-	     /** like handleDoubleClick of MRT_TableBodyCell **/
-	     onClick: (_event) => {
+             onMouseDown: (_event) => {
+               dispatch(setRowSelection([cell.row.index]));
+             },
+             onClick: (_event) => {
+	       /** like handleDoubleClick of MRT_TableBodyCell **/
 	       table.setEditingCell(cell);
 	       queueMicrotask(() => {
                  const textField = table.refs.editInputRefs.current[column.id];

@@ -59,8 +59,7 @@ function createOnSelect(dispatch: AppDispatch, items: Item[]) {
   return (args: {items: number[]}) => {
     /** `args.items` are indices of `items` **/
     const selectedRows = args.items.map(idx => items[idx]._rowIdx);
-    const rowSelection = Object.fromEntries(selectedRows.map(i => [i, true]));
-    dispatch(setRowSelection(rowSelection));
+    dispatch(setRowSelection(selectedRows));
   }
 }
 

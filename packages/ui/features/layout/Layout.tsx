@@ -89,7 +89,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
 
                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                  <Tabs value={ tabIdx } /*onChange={handleChange}*/>
-                   { tabs.map( (tab, idx) => {console.log(idx); return <Tab key={'tab'+idx} icon={tab.icon} label={tab.label} />} ) }
+                   { tabs.map( (tab, idx) => <Tab key={'tab'+idx} icon={tab.icon} label={tab.label} /> ) }
                  </Tabs>
                </Box>
 	       { tabContent }

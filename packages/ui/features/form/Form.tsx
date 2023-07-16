@@ -1,23 +1,38 @@
+import { useCallback } from 'react';
+
 import { JsonForms } from '@jsonforms/react';
 import schema from '../table/example-jsonschema.json';
 
-import { useAppSelector } from '../../app/hooks';
-import { selectTableData } from '../table/tableSlice';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectTableData, selectTableState, setRow } from '../table/tableSlice';
 
 import {
   materialRenderers,
   materialCells,
 } from '@jsonforms/material-renderers';
 
+
 export function Form() {
   const tableData = useAppSelector(selectTableData);
-  
+  const { selectedRows } = useAppSelector(selectTableState);
+  const dispatch = useAppDispatch();
+
+  const rowIndex = selectedRows && selectedRows.length === 1 ? selectedRows[0] : null;
+  const rowData = rowIndex !== null && tableData[rowIndex];
+
+  const onChange = useCallback( ({errors, data}: {errors: any[], data: any}) => {
+    if(errors.length === 0) {
+      dispatch(setRow([rowIndex, data]));
+    }
+  }, [dispatch, rowData]);
+
   return (
     <JsonForms
       renderers={materialRenderers}
       cells={materialCells}
       schema={schema}
-      data={tableData[0]}
+      data={rowData}
+      onChange={onChange}
     />
   )
 }
