@@ -9,17 +9,17 @@
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.2"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "state": "workspace:*",
     "layout": "workspace:*",
-    "vis-table": "workspace:*",
+    "react-redux": "^8.1.1",
+    "state": "workspace:*",
     "vis-form": "workspace:*",
-    "vis-timeline": "workspace:*",
-    "react-redux": "^8.1.1"
+    "vis-table": "workspace:*",
+    "vis-timeline": "workspace:*"
   }
 }

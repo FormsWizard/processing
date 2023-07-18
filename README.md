@@ -44,3 +44,17 @@ To develop all apps and packages, run the following command:
 ```
 pnpm dev
 ```
+
+To synchorize several browser instances via Y-webrtc, start a signaling server:
+
+```
+./node_modules/y-webrtc/bin/server.js
+```
+
+## Update dependencies
+
+To update all dependencies, run the following command:
+
+```
+pnpm update -r --latest
+```

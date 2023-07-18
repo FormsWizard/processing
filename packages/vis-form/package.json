@@ -9,20 +9,20 @@
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.2"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "state": "workspace:*",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@jsonforms/core": "^3.1.0",
     "@jsonforms/material-renderers": "^3.1.0",
     "@jsonforms/react": "^3.1.0",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.6",
-    "@mui/x-date-pickers": "^6.10.0"
+    "@mui/icons-material": "^5.14.0",
+    "@mui/material": "^5.14.0",
+    "@mui/x-date-pickers": "^6.10.0",
+    "state": "workspace:*"
   }
 }
