@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { YProvider, TestConsumer } from 'state';
 
 import { Layout } from 'layout';
-import { Table } from 'vis-table';
-import { Form } from 'vis-form';
+import { Table } from 'edit-table';
+import { Form } from 'edit-form';
 import { tabs } from '../app/Tabs';
 
 export interface AppProps {

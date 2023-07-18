@@ -1,0 +1,197 @@
+import React, { useEffect, useRef, RefObject, useMemo } from "react";
+import { DataSet } from "vis-data/esnext";
+import { Timeline as TimelineConstructor } from "vis-timeline/esnext";
+
+import {
+  DataGroupCollectionType,
+  DateType,
+  IdType,
+  Timeline as TimelineType,
+  TimelineItem,
+  TimelineOptions,
+} from "vis-timeline/types";
+import "vis-timeline/styles/vis-timeline-graph2d.css";
+
+import type {
+  TimelineAnimationOptions,
+  TimelineEvents,
+} from "vis-timeline/types";
+
+export type TimelineEventsWithMissing =
+  | TimelineEvents
+  | "dragover"
+  | "markerchange"
+  | "markerchanged";
+export type TimelineEventHandler =
+  | "onOcurrentTimeTick"
+  | "onClick"
+  | "onContextmenu"
+  | "onDoubleClick"
+  | "onDragover"
+  | "onDrop"
+  | "onMouseOver"
+  | "onMouseDown"
+  | "onMouseUp"
+  | "onMouseMove"
+  | "onGroupDragged"
+  | "onChanged"
+  | "onRangechange"
+  | "onRangechanged"
+  | "onSelect"
+  | "onItemover"
+  | "onItemout"
+  | "onTimechange"
+  | "onTimechanged"
+  | "onMarkerchange"
+  | "onMarkerchanged";
+
+export type TimelineEventsHandlers = Partial<Record<TimelineEventHandler, any>>;
+
+export type CustomTime = {
+  datetime: Date;
+  id: string;
+};
+
+export type SelectionOptions = {
+  focus?: boolean;
+  animation?: TimelineAnimationOptions;
+};
+
+const events: TimelineEventsWithMissing[] = [
+  "currentTimeTick",
+  "click",
+  "contextmenu",
+  "doubleClick",
+  "dragover",
+  "drop",
+  "mouseOver",
+  "mouseDown",
+  "mouseUp",
+  "mouseMove",
+  "groupDragged",
+  "changed",
+  "rangechange",
+  "rangechanged",
+  "select",
+  "itemover",
+  "itemout",
+  "timechange",
+  "timechanged",
+  "markerchange",
+  "markerchanged",
+];
+
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+type Props = {
+  items?: TimelineItem[];
+  options?: TimelineOptions;
+  selection?: IdType[];
+  customTimes?: CustomTime[];
+  selectionOptions?: SelectionOptions;
+  animate?: boolean | any;
+  currentTime?: DateType;
+} & TimelineEventsHandlers;
+
+const VisTimelineWrapper = ({
+  items = [],
+  options = {},
+  selection,
+
+  selectionOptions,
+
+  currentTime,
+  ...restProps
+}: Props) => {
+  const timelineContainerRef: RefObject<HTMLDivElement> =
+    useRef<HTMLDivElement>(null);
+  const timelineDatasetRef = useRef<DataSet<TimelineItem> | null>();
+  const timelineGroupsRef = useRef<DataGroupCollectionType>();
+  const timelineRef = useRef<TimelineType | null>(null);
+  const prevItems = useRef<TimelineItem[] | null>(null);
+
+  useEffect(() => {
+    timelineDatasetRef.current = new DataSet();
+    timelineRef.current = new TimelineConstructor(
+      timelineContainerRef.current!,
+      timelineDatasetRef.current,
+      timelineGroupsRef.current!,
+      { ...options }
+    );
+
+    return () => {
+      timelineRef.current?.destroy();
+      timelineRef.current = null;
+    };
+  }, [options]);
+
+  // tried to fix the problem with the items not updating twice
+  const itemsIdString = useMemo(
+    () => items.map((item) => item.id).join(","),
+    [items]
+  );
+
+  // tried to fix the problem with the items not updating twice
+  useEffect(() => {
+    if (!timelineDatasetRef.current) return;
+    prevItems.current = items;
+  }, [items]);
+
+  useEffect(() => {
+    if (!timelineDatasetRef.current || !timelineRef.current) return;
+    // if (itemsIdString === prevItems.current) return;
+    // prevItems.current = itemsIdString;
+    console.log("render items");
+    timelineDatasetRef.current.update(items);
+    timelineRef.current.fit();
+    return () => {
+      if (!timelineDatasetRef.current) return;
+      timelineDatasetRef.current.clear();
+    };
+  }, [items]);
+
+  useEffect(() => {
+    if (!timelineRef.current) return;
+    timelineRef.current.setOptions(options);
+  }, [options]);
+
+  useEffect(() => {
+    if (!timelineRef.current || !selection) return;
+    timelineRef.current.setSelection(
+      selection,
+      selectionOptions as Required<SelectionOptions>
+    );
+  }, [selection, selectionOptions]);
+
+  useEffect(() => {
+    if (!timelineRef.current || !currentTime) return;
+    timelineRef.current.setCurrentTime(currentTime);
+  }, [currentTime]);
+
+  useEffect(() => {
+    if (!timelineRef.current) return;
+    for (const event of events) {
+      // @ts-ignore
+      const eventHandler = restProps[`on${capitalizeFirstLetter(event)}`];
+      if (eventHandler) {
+        timelineRef.current.on(event, eventHandler);
+      }
+    }
+    return () => {
+      if (!timelineRef.current) return;
+      for (const event of events) {
+        // @ts-ignore
+        const eventHandler = restProps[`on${capitalizeFirstLetter(event)}`];
+        if (eventHandler) {
+          timelineRef.current.off(event, eventHandler);
+        }
+      }
+    };
+  }, [restProps]);
+
+  return <div ref={timelineContainerRef}></div>;
+};
+
+export default VisTimelineWrapper;

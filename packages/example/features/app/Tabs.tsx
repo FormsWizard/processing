@@ -1,4 +1,4 @@
-import { TimelineExpl } from 'vis-timeline';
+import { TimelineExpl } from 'edit-timeline';
 
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';

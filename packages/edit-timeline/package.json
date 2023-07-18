@@ -1,5 +1,5 @@
 {
-  "name": "vis-form",
+  "name": "edit-timeline",
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
@@ -15,14 +15,10 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@jsonforms/core": "^3.1.0",
-    "@jsonforms/material-renderers": "^3.1.0",
-    "@jsonforms/react": "^3.1.0",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
-    "@mui/x-date-pickers": "^6.10.0",
-    "state": "workspace:*"
+    "moment": "^2.29.4",
+    "state": "workspace:*",
+    "vis-timeline": "^7.7.2",
+    "vis-data": "^7.1.6",
+    "vis-util": "^5.0.3"
   }
 }

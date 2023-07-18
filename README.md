@@ -19,8 +19,8 @@ This [Turborepo](https://turbo.build/) includes the following packages/apps:
 - `./apps/dev`: another [Next.js](https://nextjs.org/) app including some dev output
 - `./apps/storybook`: documentation of all relevant React components via [storybook.js](https://storybook.js.org/)
 
-- `./packages/state`: the redux state used by the visualizations
-- `./packages/vis*`: visualizations using the same `./packages/state`
+- `./packages/state`: the redux state used by `./packages/edit*`
+- `./packages/edit*`: editors/visualizations using the same `./packages/state`
 
 - `./packages/example`: an example App (used by `demo` and `dev`)
 - `./packages/layout`: ui components used in `./packages/example`

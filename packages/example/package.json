@@ -18,8 +18,8 @@
     "layout": "workspace:*",
     "react-redux": "^8.1.1",
     "state": "workspace:*",
-    "vis-form": "workspace:*",
-    "vis-table": "workspace:*",
-    "vis-timeline": "workspace:*"
+    "edit-form": "workspace:*",
+    "edit-table": "workspace:*",
+    "edit-timeline": "workspace:*"
   }
 }
