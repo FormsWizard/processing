@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { RootState } from '../state/store';
 import { MRT_TableState, MRT_RowSelectionState } from 'material-react-table';
 import * as _ from 'lodash';
 

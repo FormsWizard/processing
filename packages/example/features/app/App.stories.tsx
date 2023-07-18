@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TableWithProvider } from './TableWithProvider';
+import { App } from './App';
 
 const meta = {
   title: 'App',
-  component: TableWithProvider,
-} satisfies Meta<typeof TableWithProvider>;
+  component: App,
+} satisfies Meta<typeof App>;
 export default meta;
 
 export const Story: StoryObj<typeof meta> = {};

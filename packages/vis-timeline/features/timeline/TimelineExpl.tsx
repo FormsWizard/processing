@@ -5,9 +5,9 @@ import Timeline from "react-visjs-timeline";
 import { DateType, TimelineItem, TimelineOptions } from "vis-timeline";
 import { Moment } from 'moment';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { AppDispatch } from '../../app/store';
-import { selectTableData, setCell, setRowSelection } from '../table/tableSlice';
+import { useAppSelector, useAppDispatch } from 'state';
+import { AppDispatch } from 'state';
+import { selectTableData, setCell, setRowSelection } from 'state';
 
 import mapping from './example-mapping.json';
 import * as _ from 'lodash';

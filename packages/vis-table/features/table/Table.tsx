@@ -4,16 +4,12 @@ import { useMemo, useRef } from 'react';
 import { MaterialReactTable, MRT_Cell } from 'material-react-table';
 import * as _ from 'lodash'
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectTableData, setCell, selectTableState, setRowSelection, Person } from './tableSlice';
+import { useAppSelector, useAppDispatch } from 'state';
+import { selectTableData, setCell, selectTableState, setRowSelection, Person } from 'state';
 
 import example_columns from './example-columns.json'
 
-export interface TableProps {
-  label?: string;
-}
-
-export const Table = ({}: TableProps) => {
+export const Table = () => {
   const tableInstanceRef = useRef(null);
   //console.log(tableInstanceRef)
 

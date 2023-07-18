@@ -1,24 +1,10 @@
-import { useReducer, createContext, ReactNode, useContext, useEffect, useCallback, useMemo } from 'react';
-
-import { Provider } from 'react-redux';
-import { store } from '../../app/store';
-import { Table, TableProps } from './Table';
-import { TimelineExpl } from '../timeline/TimelineExpl';
+import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
 
 import * as Y from 'yjs';
 import { WebrtcProvider } from 'y-webrtc';
 import { bind } from 'redux-yjs-bindings';
 
-import { Form } from '../form/Form';
-import { Layout } from '../layout/Layout';
-
-import PlaceIcon from '@mui/icons-material/Place';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
-import ViewWeekIcon from '@mui/icons-material/ViewWeek';
-import HubIcon from '@mui/icons-material/Hub';
-import BarChartIcon from '@mui/icons-material/BarChart';
+import { store } from '../state/store';
 
 type YState = any;
 
@@ -87,7 +73,7 @@ export function useYContextDispatch() {
   return useContext(YContextDispatch);
 };
 
-function YProvider({initialYState, children}: {initialYState?: any, children: ReactNode}) {
+export function YProvider({initialYState, children}: {initialYState?: any, children: ReactNode}) {
   const [state, dispatch] = useReducer(reducer, initialYState)
 
   return (
@@ -99,7 +85,7 @@ function YProvider({initialYState, children}: {initialYState?: any, children: Re
   )
 }
 
-function TestConsumer() {
+export function TestConsumer() {
   const YState = useYContext();
   console.log('TestConsumer', YState);
   const yStateDispatch = useYContextDispatch();
@@ -152,33 +138,3 @@ function TestConsumer() {
 
   return <>{JSON.stringify(Object.keys(YState))}</>
 }
-
-const notYetImplemented = <p>Not Yet Implemented</p>;
-
-const tabs = [{icon: <PlaceIcon/>, label: "Map", content: notYetImplemented},
-	      {icon: <CalendarMonthIcon/>, label: "Calendar", content: notYetImplemented},
-              {icon: <AccessTimeIcon/>, label: "Timeline", content: <TimelineExpl/>},
-	      {icon: <ViewWeekIcon/>, label: "Kanban", content: notYetImplemented},
-	      {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
-	      {icon: <HubIcon/>, label: "Network", content: notYetImplemented},
-	      {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented}]
-
-export const TableWithProvider = ({
-  label = "Foo",
-}: TableProps) => {
-
-  const title = 'FormsWizard Processing';
-
-  return <Provider store={store}>
-           <YProvider initialYState={{room: 'exampleRoom',
-	                              webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
-	     <Layout title={ title }
-	             drawer={ <Form/> }
-		     tabs={ tabs }
-             >
-               <Table/>
-	     </Layout>
-	     <TestConsumer/>
-	   </YProvider>
-         </Provider>;
-};

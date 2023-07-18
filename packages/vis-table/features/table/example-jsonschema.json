@@ -1,0 +1,33 @@
+{
+  "type":"object",
+  "properties": {
+    "name": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type":"string"
+        }
+      }
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type":"string"
+    },
+    "state": {
+      "type":"string"
+    },
+    "arrivalDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "departureDate": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

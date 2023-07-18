@@ -1,12 +1,5 @@
-"use client";
-
-import { TableWithProvider } from 'ui';
+import { App } from 'example';
 
 export default function Page() {
-  return (
-    <>
-      <h1>Demo</h1>
-      <TableWithProvider />
-    </>
-  );
+  return <App/>
 }

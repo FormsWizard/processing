@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo run build",
     "export": "turbo run export",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --concurrency 20",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

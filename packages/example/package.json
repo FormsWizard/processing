@@ -1,0 +1,25 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "generate:component": "turbo gen react-component"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "state": "workspace:*",
+    "layout": "workspace:*",
+    "vis-table": "workspace:*",
+    "vis-form": "workspace:*",
+    "vis-timeline": "workspace:*",
+    "react-redux": "^8.1.1"
+  }
+}

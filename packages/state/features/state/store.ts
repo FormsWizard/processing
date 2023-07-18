@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import tableReducer from '../features/table/tableSlice';
+import tableReducer from '../table/tableSlice';
 import { enhanceReducer } from 'redux-yjs-bindings';
 
 export const store = configureStore({
