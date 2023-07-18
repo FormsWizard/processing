@@ -72,6 +72,7 @@ export const tableSlice = createSlice({
 export const { setTableData, setRow, setCell, setRowSelection } = tableSlice.actions;
 
 export const selectTableData = (state: RootState) => state.table.data || initialState.data;
+
 export const selectTableState = (state: RootState) => state.table.state || initialState.state;
 
 export default tableSlice.reducer;
