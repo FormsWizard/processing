@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0"
+    "@mui/material": "^5.14.0",
+    "state": "workspace:*"
   }
 }

@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
-import ProcessingMenu from '../menu/ProcessingMenu'
+import ProcessingMenu from '../menu/ProcessingMenu';
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -11,6 +11,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import { Online } from 'state';
 
 export type Tab = {
   label: string,
@@ -43,6 +45,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                       { title }
                     </Typography>
+		    <Online/>
                     { login }
                   </>;
 
