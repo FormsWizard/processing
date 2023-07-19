@@ -118,14 +118,15 @@ const VisTimelineWrapper = ({
       timelineContainerRef.current!,
       timelineDatasetRef.current,
       timelineGroupsRef.current!,
-      { ...options }
+      {}
     );
+
 
     return () => {
       timelineRef.current?.destroy();
       timelineRef.current = null;
     };
-  }, [options]);
+  }, []);
 
   // tried to fix the problem with the items not updating twice
   const itemsIdString = useMemo(
@@ -141,19 +142,21 @@ const VisTimelineWrapper = ({
 
   useEffect(() => {
     if (!timelineDatasetRef.current || !timelineRef.current) return;
-    // if (itemsIdString === prevItems.current) return;
-    // prevItems.current = itemsIdString;
-    console.log("render items");
+
+    let itemsLength = timelineDatasetRef.current.get().length
     timelineDatasetRef.current.update(items);
-    timelineRef.current.fit();
-    return () => {
-      if (!timelineDatasetRef.current) return;
-      timelineDatasetRef.current.clear();
-    };
+    if(items.length !== itemsLength) {
+      timelineRef.current.fit();
+    }
+    // return () => {
+    //   if (!timelineDatasetRef.current) return;
+    //   timelineDatasetRef.current.clear();
+    // };
   }, [items]);
 
   useEffect(() => {
     if (!timelineRef.current) return;
+    console.log("set options")
     timelineRef.current.setOptions(options);
   }, [options]);
 

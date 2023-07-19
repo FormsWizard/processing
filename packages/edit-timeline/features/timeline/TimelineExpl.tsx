@@ -41,14 +41,14 @@ function eventFromRow(row: any, index: number) {
 }
 
 const defaultOptions: TimelineOptions = {
-  // stack: true,
-  // horizontalScroll: true,
-  // zoomable: true,
-  // zoomKey: "ctrlKey",
-  // orientation: { axis: "top" },
-  // editable: true,
-  // multiselect: true,
-  // timeAxis: { scale: "month", step: 1 },
+  stack: true,
+  horizontalScroll: true,
+  zoomable: true,
+  zoomKey: "ctrlKey",
+  orientation: { axis: "top" },
+  editable: true,
+  multiselect: true,
+  timeAxis: { scale: "month", step: 1 },
 };
 
 /** Creates an onMove callback to update table data when timeline item was moved.
@@ -57,16 +57,16 @@ const defaultOptions: TimelineOptions = {
 function handleMove(dispatch: AppDispatch, item: Item, callback: any) {
   console.log(item);
   /** TODO we could use a reducer, that is setting both dates in one dispatch **/
-  // dispatch(
-  //   setCell([
-  //     item._rowIdx,
-  //     mapping.start,
-  //     item.start?.toISOString().slice(0, 19),
-  //   ])
-  // );
-  // dispatch(
-  //   setCell([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
-  // );
+  dispatch(
+    setCell([
+      item._rowIdx,
+      mapping.start,
+      item.start?.toISOString().slice(0, 19),
+    ])
+  );
+  dispatch(
+    setCell([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
+  );
   callback(item);
 }
 
@@ -109,6 +109,7 @@ export function TimelineExpl() {
 
   const options = {
     onMove,
+    ...defaultOptions,
   };
 
   return (
