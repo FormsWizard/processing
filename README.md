@@ -24,6 +24,7 @@ This [Turborepo](https://turbo.build/) includes the following packages/apps:
 
 - `./packages/example`: an example App (used by `demo` and `dev`)
 - `./packages/layout`: ui components used in `./packages/example`
+- `./packages/style`: themes shared for all components
 
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).

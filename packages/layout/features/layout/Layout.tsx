@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { Online } from 'state';
+import { SecurityIndicator, SECURITY_LEVELS } from '../security/SecurityIndicator';
+import { ConnectionIndicator } from 'state';
 
 export type Tab = {
   label: string,
@@ -30,7 +31,6 @@ export type LayoutProps = {
 export function Layout({children, title, drawer, drawerWidth='30%', tabs}: PropsWithChildren<LayoutProps>) {
   const login = <>
                   <IconButton
-                    size="large"
                     aria-label="account of current user"
                     color="inherit"
                     disabled  // While not implemented
@@ -45,7 +45,8 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                       { title }
                     </Typography>
-		    <Online/>
+		    <ConnectionIndicator/>
+		    <SecurityIndicator level={SECURITY_LEVELS.advanced}/>
                     { login }
                   </>;
 

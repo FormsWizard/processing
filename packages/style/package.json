@@ -1,5 +1,5 @@
 {
-  "name": "layout",
+  "name": "style",
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
@@ -15,9 +15,5 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
-    "state": "workspace:*",
-    "style": "workspace:*"
   }
 }

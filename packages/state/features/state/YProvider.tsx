@@ -1,4 +1,4 @@
-import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
 
 import * as Y from 'yjs';
 import { WebrtcProvider } from 'y-webrtc';
@@ -137,21 +137,4 @@ export function TestConsumer() {
   );
 
   return <>{JSON.stringify(Object.keys(YState))}</>
-}
-
-export function Online(interval=10) {
-  const [_lastUpdate, setLastUpdate] = useState(new Date());
-  useEffect(() => {
-    var timerID = setInterval(() => setLastUpdate(new Date()), 1000*interval);
-    return () => clearInterval(timerID);
-  }, []);
-
-  const YState = useYContext();
-  const online = Object.values(YState.provider||{}).map((provider: any) => { const online = Array.from(provider.awareness.states).length;
-                                                                             return online; })
-                                                   .reduce((i, acc) => i+acc, 0);
-  if( online >= 1 )
-    return <p>{ online } Online</p>;
-  else
-    return <p>Offline</p>;
 }
