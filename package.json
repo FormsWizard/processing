@@ -6,6 +6,8 @@
     "build": "turbo run build",
     "export": "turbo run export",
     "dev": "turbo run dev --concurrency 20",
+    "test": "turbo run test",
+    "testWatch": "turbo run testWatch",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

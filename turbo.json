@@ -12,6 +12,8 @@
       "dependsOn": ["build"],
       "outputs": ["out"]
     },
+    "test": {},
+    "testWatch": {},
     "lint": {},
     "dev": {
       "cache": false,

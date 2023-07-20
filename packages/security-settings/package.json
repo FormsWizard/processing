@@ -1,0 +1,22 @@
+{
+  "name": "security-settings",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "testWatch": "jest --watch --color",
+    "lint": "eslint \"**/*.ts*\"",
+    "generate:component": "turbo gen react-component"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "eslint": "^8.45.0",
+    "eslint-config-custom": "workspace:*",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.1",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.6"
+  }
+}

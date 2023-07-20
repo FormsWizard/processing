@@ -32,30 +32,44 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ## Build
 
-To build all apps and packages, run the following command:
+To build all apps and packages, run:
 
-```
+```sh
 pnpm build
 ```
 
 ## Develop
 
-To develop all apps and packages, run the following command:
+To develop all apps and packages, run:
 
-```
+```sh
 pnpm dev
 ```
 
 To synchorize several browser instances via Y-webrtc, start a signaling server:
 
-```
+```sh
 ./node_modules/y-webrtc/bin/server.js
+```
+
+## Test
+
+To run all tests, run:
+
+```sh
+pnpm test
+```
+
+Or to watch for changed files:
+
+```sh
+pnpm testWatch
 ```
 
 ## Update dependencies
 
-To update all dependencies, run the following command:
+To update all dependencies, run:
 
-```
+```sh
 pnpm update -r --latest
 ```
