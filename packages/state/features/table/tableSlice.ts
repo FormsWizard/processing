@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../state/store';
-import { MRT_TableState, MRT_RowSelectionState } from 'material-react-table';
-import * as _ from 'lodash';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../state/store";
+import { MRT_TableState, MRT_RowSelectionState } from "material-react-table";
+import * as _ from "lodash";
 
-import data from './example-data.json';
+import data from "./example-data.json";
 
 type Name = {
   firstName: string;
@@ -25,7 +25,7 @@ export interface tweakedTanstackTableState extends MRT_TableState {
    *  We ensure that rowSelection of TanstackTable/MRT is also available and always in sync with selectedRows by calculating it within the reducer setRowSelection.
    **/
   selectedRows: SelectedRows;
-};
+}
 
 export interface TableState {
   data: Person[];
@@ -34,13 +34,11 @@ export interface TableState {
 
 const initialState: TableState = {
   data,
-  state: { selectedRows: [],
-           rowSelection: {}
-         }
+  state: { selectedRows: [], rowSelection: {} },
 };
 
 export const tableSlice = createSlice({
-  name: 'table',
+  name: "table",
   initialState,
   reducers: {
     setTableData: (state, action: PayloadAction<Person[]>) => {
@@ -48,31 +46,29 @@ export const tableSlice = createSlice({
     },
     setRow: (state, action: PayloadAction<any>) => {
       const [rowIndex, newValue] = action.payload;
-      var tableDataClone = _.cloneDeep(state.data)
-      tableDataClone[rowIndex] = newValue;
-      state.data = tableDataClone;
+      state.data[rowIndex] = newValue;
     },
     setCell: (state, action: PayloadAction<any>) => {
       const [rowIndex, columnId, newValue] = action.payload;
-      var tableDataClone = _.cloneDeep(state.data)
-      _.set(tableDataClone[rowIndex], columnId, newValue);
-      state.data = tableDataClone;
+      _.set(state.data[rowIndex], columnId, newValue);
     },
     setRowSelection: (state, action: PayloadAction<SelectedRows>) => {
       const selectedRows = action.payload;
-      const rowSelection = Object.fromEntries(selectedRows.map(i => [i, true]));
-      state.state = { ...state.state,
-	              selectedRows,
-	              rowSelection
-                    };
-    }
-  }
+      state.state.rowSelection = Object.fromEntries(
+        selectedRows.map((i) => [i, true])
+      );
+      state.state.selectedRows = selectedRows;
+    },
+  },
 });
 
-export const { setTableData, setRow, setCell, setRowSelection } = tableSlice.actions;
+export const { setTableData, setRow, setCell, setRowSelection } =
+  tableSlice.actions;
 
-export const selectTableData = (state: RootState) => state.table.data || initialState.data;
+export const selectTableData = (state: RootState) =>
+  state.table.data || initialState.data;
 
-export const selectTableState = (state: RootState) => state.table.state || initialState.state;
+export const selectTableState = (state: RootState) =>
+  state.table.state || initialState.state;
 
 export default tableSlice.reducer;
