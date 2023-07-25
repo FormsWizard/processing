@@ -3,7 +3,7 @@ import { SecurityIndicator } from './SecurityIndicator';
 import { SECURITY_LEVEL } from '../model';
 
 const meta = {
-  title: 'security-settings/SecurityIndicator',
+  title: 'security-state/SecurityIndicator',
   component: SecurityIndicator,
   argTypes: { fakeLevel: { control: 'select',
 	                   options: [SECURITY_LEVEL.advanced, SECURITY_LEVEL.good, SECURITY_LEVEL.dubious, SECURITY_LEVEL.insufficient] }}

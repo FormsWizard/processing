@@ -11,7 +11,7 @@ export function PresetSelectorDemo() {
 }
 
 const meta = {
-  title: 'security-settings/PresetSelector',
+  title: 'security-state/PresetSelector',
   component: PresetSelectorDemo,
 } satisfies Meta<typeof PresetSelector>;
 export default meta;

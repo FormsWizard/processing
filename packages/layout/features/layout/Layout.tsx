@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { SecurityIndicatorMenu } from 'security-settings';
+import { SecurityIndicatorMenu } from 'security-state';
 import { ConnectionIndicator } from 'state';
 
 export type Tab = {

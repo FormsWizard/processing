@@ -28,7 +28,7 @@ flowchart TB
   end
   
   subgraph core
-  state --> security-settings
+  state --> security-state
   end
 
   subgraph base
@@ -50,33 +50,34 @@ flowchart TB
   
   example --> layout
 
-  security-settings --> base
+  security-state --> base
   state --> base
   
-  layout --> security-settings
+  layout --> security-state
   layout --> state
   layout --> base
 ```
 
 This [Turborepo](https://turbo.build/) includes the following packages/apps:
 
-- `./apps/demo`: a [Next.js](https://nextjs.org/) app containing the live demo
-- `./apps/dev`: another [Next.js](https://nextjs.org/) app including some dev output
-- `./apps/storybook`: documentation of all relevant React components via [storybook.js](https://storybook.js.org/)
+### Apps
+- `./apps/demo`: A [Next.js](https://nextjs.org/) app containing the live demo.
+- `./apps/dev`: Another [Next.js](https://nextjs.org/) app including some dev output.
+- `./apps/storybook`: Documentation of all relevant React components via [storybook.js](https://storybook.js.org/).
 
+### Example
+- `./packages/example`: An example App (used by `demo` and `dev`).
+- `./packages/layout`: UI components used in `./packages/example`.
 
-- `./packages/example`: an example App (used by `demo` and `dev`)
-- `./packages/layout`: ui components used in `./packages/example`
+### Core
+- `./packages/state`: The shared redux state used by all features (`./packages/edit*`). It allows collaboration between different browsers/users by sharing the state using [Yjs](https://yjs.dev/).
+- `./packages/security-state`: Provider for security relevant state, enforcing security using declarative threat models.
 
+### Features
+- `./packages/edit*`: Editors/Visualizations using the same `./packages/state`.
 
-- `./packages/edit*`: editors/visualizations using the same `./packages/state`
-
-
-- `./packages/state`: the redux state used by `./packages/edit*`
-- `./packages/security-settings`: provider for security relevant state, enforcing security using declarative threat models
-
-
-- `./packages/style`: themes shared for all components
+### Base
+- `./packages/style`: Themes shared for all components.
 
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).

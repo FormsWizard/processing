@@ -17,7 +17,7 @@
   "dependencies": {
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
-    "security-settings": "workspace:*",
+    "security-state": "workspace:*",
     "state": "workspace:*",
     "style": "workspace:*"
   }

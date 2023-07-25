@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { SecurityIndicatorMenu } from './SecurityIndicatorMenu';
 
 const meta = {
-  title: 'security-settings/SecurityIndicatorMenu',
+  title: 'security-state/SecurityIndicatorMenu',
   component: SecurityIndicatorMenu,
 } satisfies Meta<typeof SecurityIndicatorMenu>;
 export default meta;

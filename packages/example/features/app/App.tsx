@@ -3,7 +3,7 @@
 import { store } from 'state';
 import { Provider } from 'react-redux';
 import { YProvider, TestConsumer } from 'state';
-import { SecurityStateProvider } from 'security-settings';
+import { SecurityStateProvider } from 'security-state';
 
 import { Layout } from 'layout';
 import { Table } from 'edit-table';
