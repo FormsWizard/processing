@@ -3,6 +3,7 @@
 import { store } from 'state';
 import { Provider } from 'react-redux';
 import { YProvider, TestConsumer } from 'state';
+import { SecurityStateProvider } from 'security-settings';
 
 import { Layout } from 'layout';
 import { Table } from 'edit-table';
@@ -18,16 +19,18 @@ export const App = ({
 }: AppProps) => {
 
 
-  return <Provider store={store}>
-           <YProvider initialYState={{room: 'exampleRoom',
-	                              webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
-	     <Layout title={ title }
-	             drawer={ <Form/> }
-		     tabs={ tabs }
-             >
-               <Table/>
-	     </Layout>
-	     <TestConsumer/>
-	   </YProvider>
-         </Provider>;
+  return <SecurityStateProvider>
+           <Provider store={store}>
+             <YProvider initialYState={{room: 'exampleRoom',
+                                        webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
+               <Layout title={ title }
+	               drawer={ <Form/> }
+	               tabs={ tabs }
+               >
+                 <Table/>
+               </Layout>
+	       <TestConsumer/>
+             </YProvider>
+           </Provider>
+	 </SecurityStateProvider>;
 };

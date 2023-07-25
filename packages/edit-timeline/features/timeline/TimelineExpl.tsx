@@ -19,12 +19,14 @@ import { selectTableData, setCell, setRowSelection } from "state";
 import mapping from "./example-mapping.json";
 import * as _ from "lodash";
 
+import { Moment } from 'moment';
+
 // TODO: - Zeitspanne interaktiv aendern, rechtsklick evtl, event loeschen, neues Event anlegen, Name im Timetable editieren, sortieren in Timeline nach typeVar (groupings),
 // TODO: Tabledata show only visible timetabledata, Tabledata show only selected timetabledata visaversa
 
 interface Item extends TimelineItem {
-  start: DateType;
-  end: DateType;
+  start: DateType&Moment;
+  end: DateType&Moment;
   _rowIdx: number;
 }
 

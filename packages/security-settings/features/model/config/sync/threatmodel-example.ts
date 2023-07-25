@@ -1,8 +1,9 @@
-import { SECURITY_LEVEL } from '../../level';
+import { SECURITY_LEVEL } from '../../policy/level';
 import { SERVER } from '../../environment/model';
 import { SYNC_connection_encryption, SYNC_e2e_encryption, SYNC_enabled, /*SYNC_protocol*/ } from './model';
+import { THREAT_MODEL } from '../threatmodel';
 
-export const permittedConfigs = {
+export const syncThreatModel: THREAT_MODEL = {
   [SECURITY_LEVEL.advanced]: {
     '*': [{ enabled: SYNC_enabled.disabled }],
     [SERVER.trusted]: [

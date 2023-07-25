@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import { SecurityIndicator, SECURITY_LEVELS } from '../security/SecurityIndicator';
+import { SecurityIndicatorMenu } from 'security-settings';
 import { ConnectionIndicator } from 'state';
 
 export type Tab = {
@@ -46,7 +46,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                       { title }
                     </Typography>
 		    <ConnectionIndicator/>
-		    <SecurityIndicator level={SECURITY_LEVELS.advanced}/>
+		    <SecurityIndicatorMenu/>
                     { login }
                   </>;
 

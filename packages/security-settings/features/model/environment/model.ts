@@ -11,3 +11,5 @@ export enum CLIENT {
   limited = 'limited',
   trusted = 'trusted'
 }
+
+export type ENV = SERVER|CLIENT;

@@ -20,6 +20,7 @@
     "state": "workspace:*",
     "edit-form": "workspace:*",
     "edit-table": "workspace:*",
-    "edit-timeline": "workspace:*"
+    "edit-timeline": "workspace:*",
+    "security-settings": "workspace:*"
   }
 }

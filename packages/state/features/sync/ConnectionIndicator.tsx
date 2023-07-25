@@ -16,7 +16,9 @@ import SignalWifiOffIcon from '@mui/icons-material/SignalWifiOff';
 //import SignalWifi4BarLockIcon from '@mui/icons-material/SignalWifi4BarLock';
 //import WarningIcon from '@mui/icons-material/Warning';
 
-export function ConnectionIndicator({interval=10}) {
+type Seconds = number;
+
+export function ConnectionIndicator({interval=10, fakeOnline}: {interval?: Seconds, fakeOnline?: number}) {
   const [_lastUpdate, setLastUpdate] = useState(new Date());
   useEffect(() => {
     var timerID = setInterval(() => setLastUpdate(new Date()), 1000*interval);
@@ -24,9 +26,9 @@ export function ConnectionIndicator({interval=10}) {
   }, []);
 
   const YState = useYContext();
-  const online = Object.values(YState.provider||{}).map((provider: any) => { const online = Array.from(provider.awareness.states).length;
-                                                                             return online; })
-                                                   .reduce((i, acc) => i+acc, 0);
+  const online = fakeOnline || Object.values(YState.provider||{}).map((provider: any) => { const online = Array.from(provider.awareness.states).length;
+                                                                                           return online; })
+                                                                 .reduce((i, acc) => i+acc, 0);
 
   // TODO: Show state depending on latency (or time since last received message)
   // TODO: Show when deliberately in offline mode
