@@ -6,9 +6,11 @@ import { SECURITY_LEVEL } from '../..//model';
 const defaultPolicy = SECURITY_LEVEL.dubious;  // TODO
 const defaultPreset = syncServerWebrtcPresets[0];
 
-export default {
+export const syncServerWebrtc = {
   threatModel: syncThreatModel,
   presets: syncServerWebrtcPresets,
   deriveState: deriveState,
   defaultState: deriveState(syncThreatModel, defaultPolicy, defaultPreset, {})
 };
+
+export default syncServerWebrtc;

@@ -10,7 +10,7 @@ function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: b
   const onClick = useCallback( () => securityStateDispatch && securityStateDispatch({ attackVector: 'syncServerWebrtc',
                                                                                       type: ACTIONS.selectPreset,
                                                                                       payload: {index} }),
-			       [preset] );
+			       [index, securityStateDispatch] );
   const Icon = preset._ui?.icon;
   return (
     <Card onClick={onClick}
