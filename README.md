@@ -13,17 +13,69 @@ xdg-open http://localhost:8000
 
 ## Apps and Packages
 
+```mermaid
+flowchart TB
+  subgraph apps
+  demo
+  dev
+  storybook
+  end
+  
+  subgraph features
+  edit-table
+  edit-form
+  edit-timeline
+  end
+  
+  subgraph core
+  state --> security-settings
+  end
+
+  subgraph base
+  style_[style]
+  end
+
+  edit-table --> core
+  edit-form --> core
+  edit-timeline --> core
+  features --> base
+
+  demo --> example
+  dev --> example
+  storybook --> example
+
+  example --> edit-table
+  example --> edit-form
+  example --> edit-timeline
+  
+  example --> layout
+
+  security-settings --> base
+  state --> base
+  
+  layout --> security-settings
+  layout --> state
+  layout --> base
+```
+
 This [Turborepo](https://turbo.build/) includes the following packages/apps:
 
 - `./apps/demo`: a [Next.js](https://nextjs.org/) app containing the live demo
 - `./apps/dev`: another [Next.js](https://nextjs.org/) app including some dev output
 - `./apps/storybook`: documentation of all relevant React components via [storybook.js](https://storybook.js.org/)
 
-- `./packages/state`: the redux state used by `./packages/edit*`
-- `./packages/edit*`: editors/visualizations using the same `./packages/state`
 
 - `./packages/example`: an example App (used by `demo` and `dev`)
 - `./packages/layout`: ui components used in `./packages/example`
+
+
+- `./packages/edit*`: editors/visualizations using the same `./packages/state`
+
+
+- `./packages/state`: the redux state used by `./packages/edit*`
+- `./packages/security-settings`: provider for security relevant state, enforcing security using declarative threat models
+
+
 - `./packages/style`: themes shared for all components
 
 
