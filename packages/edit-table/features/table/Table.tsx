@@ -5,7 +5,7 @@ import { MaterialReactTable, MRT_Cell } from 'material-react-table';
 import * as _ from 'lodash'
 
 import { useAppSelector, useAppDispatch } from 'state';
-import { selectTableData, setCell, selectTableState, setRowSelection, Person } from 'state';
+import { selectData, setCellData, selectEditorState, setRowSelection, Person } from 'state';
 
 import example_columns from './example-columns.json'
 
@@ -13,8 +13,8 @@ export const Table = () => {
   const tableInstanceRef = useRef(null);
   //console.log(tableInstanceRef)
 
-  const tableData = useAppSelector(selectTableData);
-  const tableState = useAppSelector(selectTableState);
+  const tableData = useAppSelector(selectData);
+  const tableState = useAppSelector(selectEditorState);
   const dispatch = useAppDispatch();
 
   const columns = useMemo(
@@ -23,7 +23,7 @@ export const Table = () => {
   );
 
   const handleSaveCell = (cell: MRT_Cell<Person>, value: any) => {
-    dispatch(setCell([cell.row.index, cell.column.id, value]))
+    dispatch(setCellData([cell.row.index, cell.column.id, value]))
   };
 
   return <MaterialReactTable

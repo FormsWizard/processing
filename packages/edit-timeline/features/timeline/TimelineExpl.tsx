@@ -14,7 +14,7 @@ import {
 } from "vis-timeline/types";
 import { useAppSelector, useAppDispatch } from "state";
 import { AppDispatch } from "state";
-import { selectTableData, setCell, setRowSelection } from "state";
+import { selectData, setCellData, setRowSelection } from "state";
 
 import mapping from "./example-mapping.json";
 import * as _ from "lodash";
@@ -60,14 +60,14 @@ function handleMove(dispatch: AppDispatch, item: Item, callback: any) {
   console.log(item);
   /** TODO we could use a reducer, that is setting both dates in one dispatch **/
   dispatch(
-    setCell([
+    setCellData([
       item._rowIdx,
       mapping.start,
       item.start?.toISOString().slice(0, 19),
     ])
   );
   dispatch(
-    setCell([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
+    setCellData([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
   );
   callback(item);
 }
@@ -86,7 +86,7 @@ function handleSelect(
 }
 
 export function TimelineExpl() {
-  const tableData = useAppSelector(selectTableData);
+  const tableData = useAppSelector(selectData);
   const dispatch = useAppDispatch();
 
   const items = useMemo(

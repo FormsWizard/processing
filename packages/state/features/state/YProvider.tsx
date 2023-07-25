@@ -86,6 +86,20 @@ export function YProvider({initialYState, children}: {initialYState?: any, child
 }
 
 export function TestConsumer() {
+  useEffect(
+    () => {
+      const webrtcConfig = {signaling: ['ws://localhost:4444']};
+      const doc1 = new Y.Doc();
+      const doc2 = new Y.Doc();
+      const webrtc1 = new WebrtcProvider('room1', doc1, webrtcConfig);
+      const webrtc2 = new WebrtcProvider('room2', doc2, webrtcConfig);
+      bind(doc1, store, 'data');
+      bind(doc2, store, 'editorState');
+    }, []
+  );
+}
+
+export function TestConsumerOrig() {
   const YState = useYContext();
   console.log('TestConsumer', YState);
   const yStateDispatch = useYContextDispatch();
@@ -130,7 +144,7 @@ export function TestConsumer() {
     () => {
       if(docGuid) {
         console.log('bind…')
-        bind(YState.doc, store, 'table');
+        bind(YState.doc, store, 'data');
 	console.log(store)
       };
     }, [docGuid, YState.room]
