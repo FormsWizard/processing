@@ -1,11 +1,9 @@
-import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo, PropsWithChildren } from 'react';
+import { useReducer, useState, createContext, useContext, useEffect, PropsWithChildren } from 'react';
 
 import * as Y from 'yjs';
 import * as YWebrtc from 'y-webrtc';
 import { Store } from '@reduxjs/toolkit';
 import { bind } from 'redux-yjs-bindings';
-
-import { store } from '../state/store';
 
 interface WebrtcProvider {
   provider?: YWebrtc.WebrtcProvider
@@ -23,6 +21,7 @@ export interface SliceState {
   store?: Store
   slice?: string
   unbind?: () => void
+  logging?: boolean | (() => void)
 }
 
 interface YState {
@@ -49,14 +48,37 @@ export function useYContextDispatch() {
   return useContext(YContextDispatch);
 };
 
+async function hash(message: string) {
+  const data = new TextEncoder().encode(message);
+  const message_digest = await window.crypto.subtle.digest("SHA-512", data);
+  const octets = Array.from(new Uint8Array(message_digest));
+  const hex = octets.map(octet => octet.toString(16).padStart(2, "0")).join("");
+  return hex;
+}
+
+async function configureSliceAsync(yContext: Partial<YState>) {
+  await Promise.all((yContext?.slices||[])?.map( async sliceState => {
+    const webrtc = sliceState.providers.webrtc;
+    if(webrtc) {
+      webrtc.room = webrtc.room ||
+                   webrtc.options.password && `${sliceState.slice}_${await hash(webrtc.options.password)}` ||
+	           sliceState.slice ||
+	           crypto.randomUUID();
+    }
+    return sliceState
+  }))
+  return yContext;
+}
+
 function configureSlice(sliceState: SliceState) {
-  console.log({sliceState})
   sliceState.doc = sliceState.doc || new Y.Doc();
-  sliceState.doc.on('update', (_, origin:any) => { console.debug( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
+  if(sliceState.logging) {
+    const logFn = sliceState.logging === true ? console.log : sliceState.logging;
+    sliceState.doc.on('update', (_, origin:any) => { logFn( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
+  }
 
   const webrtc = sliceState.providers.webrtc;
-  if(webrtc) {
-    webrtc.room = webrtc.room || sliceState.slice || crypto.randomUUID();
+  if(webrtc?.room) {
     webrtc.provider = /*webrtc.provider ||*/ new YWebrtc.WebrtcProvider(webrtc.room, sliceState.doc, webrtc.options);
   }
 
@@ -68,14 +90,26 @@ function configureSlice(sliceState: SliceState) {
 }
 
 export function YConfigurator() {
-  const yContext = useYContext();
+  const yContextOrig = useYContext();
+  const [yContext, setYContext] = useState<Partial<YState>>()
 
   useEffect(
     () => {
-      const destructors = yContext.slices?.map( sliceState => configureSlice(sliceState) );
-      // TODO use dispatch to set updated sliceStates?
-      return () => { destructors?.map( f => f() ) }
-    }, []
+      const asyncEffect = async () => {
+        setYContext( await configureSliceAsync(yContextOrig) );
+      }
+      asyncEffect()
+    }, [yContextOrig]
+  );
+
+  useEffect(
+    () => {
+      if(yContext) {
+        const destructors = yContext.slices?.map( sliceState => configureSlice(sliceState) );
+        // TODO use dispatch to set updated sliceStates?
+        return () => { destructors?.map( f => f() ) }
+      }
+    }, [yContext]
   );
 
   return <></>

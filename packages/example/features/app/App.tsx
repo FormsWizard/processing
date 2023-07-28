@@ -18,13 +18,14 @@ export const App = ({
   title = 'FormsWizard Processing'
 }: AppProps) => {
 
+  const hashParameters = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
 
   return <SecurityStateProvider>
            <Provider store={store}>
-             <YProvider initialYState={{slices: [{store, slice: 'data',
-                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444']}}}},
+             <YProvider initialYState={{slices: [{store, slice: 'data', //logging: true,
+                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444'], password: hashParameters['dataKey']}}}},
                                                  {store, slice: 'editorState',
-                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444']}}}}]
+                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444'], password: hashParameters['editorStateKey']}}}}]
 	     }}>
                <Layout title={ title }
 	               drawer={ <Form/> }
