@@ -1,70 +1,46 @@
-import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
+import { useReducer, createContext, ReactNode, useContext, useEffect, useMemo, PropsWithChildren } from 'react';
 
 import * as Y from 'yjs';
-import { WebrtcProvider } from 'y-webrtc';
+import * as YWebrtc from 'y-webrtc';
+import { Store } from '@reduxjs/toolkit';
 import { bind } from 'redux-yjs-bindings';
 
 import { store } from '../state/store';
 
-type YState = any;
-
-function createDoc(state: YState) {
-  if(!!state.doc) {
-    console.warn('existing doc'); 
-    return state.doc;
-  }
-  console.log('new doc');
-  const doc = new Y.Doc()
-  // @ts-ignore
-  doc.on('update', (_, origin:any) => { console.debug( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
-  return doc;
+interface WebrtcProvider {
+  provider?: YWebrtc.WebrtcProvider
+  options: YWebrtc.ProviderOptions
+  room?: string  // defaults to sliceState.slice
 }
 
-function connectProvider(state: YState) {
-  const { doc, room, webrtcConfig } = state;
-  if(!doc) {
-    console.warn('YProvider can not be connected without having a doc');
-    return null;
-  }
-  if(!room) {
-    console.warn('YProvider can not be connected without setting a room');
-    return null;
-  }
-  if(webrtcConfig) {
-    if(state.provider?.webrtc) {
-      console.warn('YProvider already connected!');
-      return state.provider;  // TODO: disconnect and reconnect instead
-    }
-    console.log('really connect')
-    return { webrtc: new WebrtcProvider(room, doc, webrtcConfig) };  // TODO error handling
-  }
+interface Providers {
+  webrtc?: WebrtcProvider
 }
 
-const ACTIONS = { setWebrtcConfig: 'setWebrtcConfig',
-                  setRoom: 'setRoom',
-                  createDoc: 'createDoc',
-                  setProvider: 'setProvider',
-                };
+export interface SliceState {
+  doc?: Y.Doc
+  providers: Providers
+  store?: Store
+  slice?: string
+  unbind?: () => void
+}
+
+interface YState {
+  slices: SliceState[]
+}
+
+const ACTIONS = {};
 
 type ActionType = keyof typeof ACTIONS;
 
-function reducer(state: YState, action: {type: ActionType, payload: any}) {
-  console.log(action)
+function reducer(state: Partial<YState>, action: {type: ActionType, payload: any}) {
   switch(action.type) {
-    case ACTIONS.setWebrtcConfig:
-      return { 'webrtcConfig': action.payload, ...state };
-    case ACTIONS.setRoom:
-      return { 'room': action.payload, ...state };
-    case ACTIONS.createDoc:
-      return { 'doc': createDoc(state), ...state };
-    case ACTIONS.setProvider:
-      return { 'provider': action.payload, ...state };
     default:
       return state;
   }
 }
 
-const YContext = createContext<YState>({});
+const YContext = createContext<Partial<YState>>({});
 const YContextDispatch = createContext<any>(null);
 export function useYContext() {
   return useContext(YContext);
@@ -73,82 +49,51 @@ export function useYContextDispatch() {
   return useContext(YContextDispatch);
 };
 
-export function YProvider({initialYState, children}: {initialYState?: any, children: ReactNode}) {
+function configureSlice(sliceState: SliceState) {
+  console.log({sliceState})
+  sliceState.doc = sliceState.doc || new Y.Doc();
+  sliceState.doc.on('update', (_, origin:any) => { console.debug( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
+
+  const webrtc = sliceState.providers.webrtc;
+  if(webrtc) {
+    webrtc.room = webrtc.room || sliceState.slice || crypto.randomUUID();
+    webrtc.provider = /*webrtc.provider ||*/ new YWebrtc.WebrtcProvider(webrtc.room, sliceState.doc, webrtc.options);
+  }
+
+  if(sliceState.store && sliceState.slice)
+    sliceState.unbind = bind(sliceState.doc, sliceState.store, sliceState.slice);
+
+  return () => { sliceState.unbind && sliceState.unbind();
+                 sliceState.providers.webrtc?.provider?.destroy(); };
+}
+
+export function YConfigurator() {
+  const yContext = useYContext();
+
+  useEffect(
+    () => {
+      const destructors = yContext.slices?.map( sliceState => configureSlice(sliceState) );
+      // TODO use dispatch to set updated sliceStates?
+      return () => { destructors?.map( f => f() ) }
+    }, []
+  );
+
+  return <></>
+}
+
+interface YProviderProps {
+  initialYState: Partial<YState>
+}
+
+export function YProvider({children, initialYState}: PropsWithChildren<YProviderProps>) {
   const [state, dispatch] = useReducer(reducer, initialYState)
 
   return (
     <YContext.Provider value={state}>
       <YContextDispatch.Provider value={dispatch}>
+        <YConfigurator/>
         {children}
       </YContextDispatch.Provider>
     </YContext.Provider>
   )
-}
-
-export function TestConsumer() {
-  useEffect(
-    () => {
-      const webrtcConfig = {signaling: ['ws://localhost:4444']};
-      const doc1 = new Y.Doc();
-      const doc2 = new Y.Doc();
-      const webrtc1 = new WebrtcProvider('room1', doc1, webrtcConfig);
-      const webrtc2 = new WebrtcProvider('room2', doc2, webrtcConfig);
-      bind(doc1, store, 'data');
-      bind(doc2, store, 'editorState');
-    }, []
-  );
-}
-
-export function TestConsumerOrig() {
-  const YState = useYContext();
-  console.log('TestConsumer', YState);
-  const yStateDispatch = useYContextDispatch();
- 
-  useEffect(
-    () => {
-      if(!YState.webrtcConfig) {
-        console.debug('set default webrtcConfig');
-        yStateDispatch({ type: ACTIONS.setWebrtcConfig, payload: {signaling: ['ws://localhost:4444']} });
-      }
-      else if(!YState.room) {
-        console.debug('set default room');
-        yStateDispatch({ type: ACTIONS.setRoom, payload: 'fallbackRoom' });
-      }
-      else if(!YState.doc) {
-	console.debug('create a doc');
-        yStateDispatch({ type: ACTIONS.createDoc });
-      }
-    }, []
-  );
-
-  const docGuid = useMemo(() => YState.doc?.guid, [YState.doc])
-
-  useEffect(
-    () => {
-      if(docGuid)
-        console.log('DOC changed', docGuid);
-    }, [docGuid]
-  );
-
-  useEffect(
-    () => {
-      if(docGuid) {
-        console.log('connect!!!')
-	const provider = connectProvider(YState);
-        yStateDispatch({ type: ACTIONS.setProvider, payload: provider });
-      };
-    }, [docGuid, YState.room, YState.webrtcConfig]
-  );
-
-  useEffect(
-    () => {
-      if(docGuid) {
-        console.log('bind…')
-        bind(YState.doc, store, 'data');
-	console.log(store)
-      };
-    }, [docGuid, YState.room]
-  );
-
-  return <>{JSON.stringify(Object.keys(YState))}</>
 }

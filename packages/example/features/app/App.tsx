@@ -2,7 +2,7 @@
 
 import { store } from 'state';
 import { Provider } from 'react-redux';
-import { YProvider, TestConsumer } from 'state';
+import { YProvider } from 'state';
 import { SecurityStateProvider } from 'security-state';
 
 import { Layout } from 'layout';
@@ -21,15 +21,17 @@ export const App = ({
 
   return <SecurityStateProvider>
            <Provider store={store}>
-             <YProvider initialYState={{room: 'exampleRoom',
-                                        webrtcConfig: {signaling: ['ws://localhost:4444']}}}>
+             <YProvider initialYState={{slices: [{store, slice: 'data',
+                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444']}}}},
+                                                 {store, slice: 'editorState',
+                                                  providers: {webrtc: {options: {signaling: ['ws://localhost:4444']}}}}]
+	     }}>
                <Layout title={ title }
 	               drawer={ <Form/> }
 	               tabs={ tabs }
                >
                  <Table/>
                </Layout>
-	       <TestConsumer/>
              </YProvider>
            </Provider>
 	 </SecurityStateProvider>;

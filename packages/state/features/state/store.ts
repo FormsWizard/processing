@@ -10,11 +10,11 @@ export const enhanceReducerX =
     if (action?.type === SET_STATE_FROM_YJS_ACTION) {
       //return action.payload === undefined ? state : action.payload;
       const result = {...state, ...action.payload}
-      console.warn(action.type, name, {state, action, result})
+      //console.warn(action.type, name, {state, action, result})
       return result
     } else {
       const result = currentReducer(state, action);
-      console.warn(action.type, name, {state, action, result})
+      //console.warn(action.type, name, {state, action, result})
       return result
     }
   };

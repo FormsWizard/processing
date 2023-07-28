@@ -18,17 +18,18 @@ import SignalWifiOffIcon from '@mui/icons-material/SignalWifiOff';
 
 type Seconds = number;
 
-export function ConnectionIndicator({interval=10, fakeOnline}: {interval?: Seconds, fakeOnline?: number}) {
+export function ConnectionIndicator({interval=3, fakeOnline}: {interval?: Seconds, fakeOnline?: number}) {
   const [_lastUpdate, setLastUpdate] = useState(new Date());
   useEffect(() => {
     var timerID = setInterval(() => setLastUpdate(new Date()), 1000*interval);
     return () => clearInterval(timerID);
   }, []);
 
-  const YState = useYContext();
-  const online = fakeOnline || Object.values(YState.provider||{}).map((provider: any) => { const online = Array.from(provider.awareness.states).length;
-                                                                                           return online; })
-                                                                 .reduce((i, acc) => i+acc, 0);
+  const yState = useYContext();
+  const realOnlinePerSlice = (yState.slices||[]).map( sliceState => Object.values(sliceState.providers).map( provider => Array.from(provider.provider?.awareness.states||[]).length )
+                                                                                                       .reduce((i, acc) => i+acc, 0) )
+  const realOnline = Math.max.apply(Math, realOnlinePerSlice)
+  const online = fakeOnline || realOnline;
 
   // TODO: Show state depending on latency (or time since last received message)
   // TODO: Show when deliberately in offline mode
