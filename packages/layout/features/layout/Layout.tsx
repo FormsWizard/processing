@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import { SecurityIndicatorMenu } from 'security-state';
-import { ConnectionIndicator } from 'state';
+import { ConnectionIndicatorMenu } from 'state';
 
 export type Tab = {
   label: string,
@@ -45,7 +45,7 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                       { title }
                     </Typography>
-		    <ConnectionIndicator/>
+		    <ConnectionIndicatorMenu/>
 		    <SecurityIndicatorMenu/>
                     { login }
                   </>;

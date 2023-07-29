@@ -101,6 +101,7 @@ export function YConfigurator() {
       asyncEffect()
     }, [yContextOrig]
   );
+  //console.log({yContext})
 
   useEffect(
     () => {
@@ -115,7 +116,7 @@ export function YConfigurator() {
   return <></>
 }
 
-interface YProviderProps {
+export interface YProviderProps {
   initialYState: Partial<YState>
 }
 

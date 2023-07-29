@@ -17,7 +17,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "lodash": "^4.17.21",
+    "@mui/material": "^5.14.0",
     "redux-yjs-bindings": "^0.3.1",
+    "security-state": "workspace:*",
     "style": "workspace:*",
     "y-indexeddb": "^9.0.11",
     "y-webrtc": "^10.2.5",

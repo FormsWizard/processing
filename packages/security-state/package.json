@@ -13,8 +13,6 @@
     "dev": "npm run build -- --watch"
   },
   "dependencies": {
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
     "style": "workspace:*"
   },
   "devDependencies": {
@@ -28,6 +26,8 @@
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@mui/icons-material": "^5.14.0",
+    "@mui/material": "^5.14.0"
   }
 }
