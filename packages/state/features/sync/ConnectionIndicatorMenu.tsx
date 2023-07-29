@@ -27,19 +27,19 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
     <Grid>
       { Object.entries(slicesDefs).map( ([sliceId, sliceDef]) => {
         const { providers } = slicesStateByName[sliceId];
-        return <div key={sliceId}>
-	         <h3>
+        return <div key={sliceId} style={{padding: '0.5rem'}}>
+	         <h2>
 		   <sliceDef.img sx={{verticalAlign: 'bottom'}}/> &nbsp;
 		   {sliceDef.title}
-		 </h3>
+		 </h2>
 		 { Object.entries(providerDefs).map( ([providerId, providerDef]) => {
 		   const provider = providers[providerId];
                    const online = Array.from(provider.provider?.awareness.states||{}).length;
                    return <Grid key={providerId} sx={{paddingLeft: '0.5rem'}}>
-                            <h4>
+                            <h3>
 			      {providerDef.title} &nbsp;
                               <Grid sx={{display: 'contents', color: 'text.secondary'}}><OnlineStatus online={online}/></Grid>
-			    </h4>
+			    </h3>
                             <Grid sx={{paddingLeft: '0.5rem'}}>
 			      { providerId=='webrtc' && <>
                                   <p><Link sx={{verticalAlign: 'bottom'}}/>Signalling: {provider.options.signaling.join(', ')}</p>
