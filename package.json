@@ -9,13 +9,14 @@
     "test": "turbo run test",
     "testWatch": "turbo run testWatch",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "upgrade": "npx @turbo/codemod update"
   },
   "devDependencies": {
-    "@turbo/gen": "^1.10.8",
-    "eslint": "^8.45.0",
+    "@turbo/gen": "^1.10.12",
+    "eslint": "^8.46.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.0.0",
-    "turbo": "^1.10.8"
+    "turbo": "^1.10.12"
   }
 }

@@ -24,7 +24,7 @@ export function Form() {
     if(errors.length === 0) {
       dispatch(setRowData([rowIndex, data]));
     }
-  }, [dispatch, rowData, rowIndex]);
+  }, [dispatch, rowIndex]);
 
   return (
     <JsonForms

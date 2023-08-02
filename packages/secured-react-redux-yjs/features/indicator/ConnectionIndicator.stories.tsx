@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ConnectionIndicator } from './ConnectionIndicator';
 
 const meta = {
-  title: 'state/ConnectionIndicator',
+  title: 'secured-react-redux-yjs/ConnectionIndicator',
   component: ConnectionIndicator,
 } satisfies Meta<typeof ConnectionIndicator>;
 export default meta;

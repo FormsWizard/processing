@@ -3,7 +3,7 @@
 import { store } from 'state';
 import { Provider } from 'react-redux';
 import { SecurityStateProvider } from 'security-state';
-import { SecureYProvider } from 'state';
+import { SecureYProvider } from 'secured-react-redux-yjs';
 import NoSsr from '@mui/base/NoSsr';
 
 import { Layout } from 'layout';

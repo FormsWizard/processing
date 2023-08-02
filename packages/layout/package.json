@@ -1,24 +1,29 @@
 {
   "name": "layout",
   "version": "0.0.0",
+  "type": "module",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
-    "generate:component": "turbo gen react-component"
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "dependencies": {
+    "secured-react-redux-yjs": "workspace:*",
+    "security-state": "workspace:*",
+    "state": "workspace:*",
+    "style": "workspace:*",
+    "@mui/base": "5.0.0-beta.8",
+    "@mui/icons-material": "^5.14.0",
+    "@mui/material": "^5.14.0",
+    "react": "^18.2.0"
+  },
+  "peerDependencies": {
   },
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6"
-  },
-  "dependencies": {
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
-    "security-state": "workspace:*",
-    "state": "workspace:*",
-    "style": "workspace:*"
   }
 }

@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import { SecurityIndicatorMenu } from 'security-state';
-import { ConnectionIndicatorMenu } from 'state';
+import { ConnectionIndicatorMenu } from 'secured-react-redux-yjs';
 
 export type Tab = {
   label: string,

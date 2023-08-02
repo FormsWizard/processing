@@ -10,16 +10,16 @@
     "build": "tsup index.tsx --format esm --dts",
     "dev": "npm run build -- --watch"
   },
-  "devDependencies": {
-    "eslint": "^8.45.0",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "typescript": "^5.1.6"
-  },
   "peerDependencies": {
     "@mui/base": "5.0.0-beta.8",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.6"
   }
 }

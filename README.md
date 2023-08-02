@@ -28,17 +28,20 @@ flowchart TB
   end
   
   subgraph core
-  state --> security-state
+  direction TB
+  state -.- secured-react-redux-yjs
+  secured-react-redux-yjs --> security-state
+  secured-react-redux-yjs --> react-redux-yjs
   end
 
-  subgraph base
+  subgraph common
   style_[style]
   end
 
   edit-table --> core
   edit-form --> core
   edit-timeline --> core
-  features --> base
+  features --> common
 
   demo --> example
   dev --> example
@@ -47,15 +50,14 @@ flowchart TB
   example --> edit-table
   example --> edit-form
   example --> edit-timeline
-  
+
+  example --> core
   example --> layout
 
-  security-state --> base
-  state --> base
+  core --> common
   
-  layout --> security-state
-  layout --> state
-  layout --> base
+  layout --> core
+  layout --> common
 ```
 
 This [Turborepo](https://turbo.build/) includes the following packages/apps:
@@ -70,13 +72,15 @@ This [Turborepo](https://turbo.build/) includes the following packages/apps:
 - `./packages/layout`: UI components used in `./packages/example`.
 
 ### Core
-- `./packages/state`: The shared redux state used by all features (`./packages/edit*`). It allows collaboration between different browsers/users by sharing the state using [Yjs](https://yjs.dev/).
+- `./packages/state`: The shared redux state used by all features (`./packages/edit*`). Collaboration of this state is provided by `secured-react-redux-yjs`.
+- `./packages/secured-react-redux-yjs`: Secures settings for `react-redux-yjs` with `security-state`
+- `./packages/react-redux-yjs`: Provider to exchange redux state via [Yjs](https://yjs.dev/)
 - `./packages/security-state`: Provider for security relevant state, enforcing security using declarative threat models.
 
 ### Features
 - `./packages/edit*`: Editors/Visualizations using the same `./packages/state`.
 
-### Base
+### Common
 - `./packages/style`: Themes shared for all components.
 
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Popper } from 'style';
 import { ConnectionIndicator, OnlineStatus } from './ConnectionIndicator';
-import { useYContext } from '../state/YProvider';
+import { useYContext } from 'react-redux-yjs';
 import { Grid } from '@mui/material';
 import { GridOn, Edit } from '@mui/icons-material';
 import { VpnKey, VpnKeyOff } from '@mui/icons-material';

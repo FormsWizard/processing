@@ -1,26 +1,24 @@
 {
-  "name": "security-state",
+  "name": "react-redux-yjs",
   "version": "0.0.0",
   "type": "module",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "test": "jest",
     "testWatch": "jest --watch --color",
     "lint": "eslint \"**/*.ts*\"",
     "build": "tsup index.tsx --format esm --dts",
-    "dev": "#npm run build -- --watch"
+    "dev": "npm run build -- --watch"
   },
   "dependencies": {
-    "style": "workspace:*",
-    "lodash": "^4.17.21",
-    "@mui/base": "5.0.0-beta.8",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
-    "react": "^18.2.0"
-  },
-  "peerDependencies": {
+    "redux-yjs-bindings": "^0.3.1",
+    "y-indexeddb": "^9.0.11",
+    "y-webrtc": "^10.2.5",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.7",
+    "style": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
@@ -31,5 +29,8 @@
     "tsconfig": "workspace:*",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
   }
 }
