@@ -9,6 +9,7 @@
     "generate:component": "turbo gen react-component"
   },
   "dependencies": {
+    "style": "workspace:*",
     "layout": "workspace:*",
     "react-redux": "^8.1.1",
     "edit-form": "workspace:*",
