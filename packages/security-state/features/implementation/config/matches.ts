@@ -23,8 +23,8 @@ export function filterConfigMaps<E extends ENV>(threatModel: THREAT_MODEL, polic
   const configsMatchingPolicy: ConfigMap<E>[] = levelsMatchingPolicy.map( level => { const configsByEnv = threatModel[level] as ConfigsForEnv<E>;
                                                                                      return (Object.keys(configsByEnv) as E[])
                                                                                                    .map( e => { return { 'level': level,
-                                                                                                                           'env': e,
-                                                                                                                           'configs': configsByEnv[e] as CONFIG[] }} );
+                                                                                                                         'env': e,
+                                                                                                                         'configs': configsByEnv[e] as CONFIG[] }} );
                                                                                    }
                                                                         ).flat();
   const matchingConfigs = configsMatchingPolicy.filter( conf => matchingEnv(env, conf.env) )

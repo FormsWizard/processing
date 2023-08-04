@@ -2,8 +2,9 @@
 
 import { store } from 'state';
 import { Provider } from 'react-redux';
-import { SecurityStateProvider } from 'security-state';
-import { SecureYProvider } from 'secured-react-redux-yjs';
+import { SecurityStateProvider, defaultSecurityState } from 'security-state';
+import { defaultSyncState } from 'security-state/features/attackVectors/syncServerWebrtc';
+import { SecuredYProvider } from 'secured-react-redux-yjs';
 import NoSsr from '@mui/base/NoSsr';
 import { ThemeProvider } from '@mui/material/styles'
 import { useMemo } from 'react'
@@ -28,22 +29,24 @@ export const App = ({
   const hash = typeof location != 'undefined' && location.hash.slice(1);
   const hashParameters = !hash ? {} : Object.fromEntries(new URLSearchParams(hash));
 
+  const initialSecurityState = {
+    ...defaultSecurityState,
+    syncServerDataWebrtc: defaultSyncState({password: hashParameters['dataKey']}),
+    syncServerSessionWebrtc: defaultSyncState({password: hashParameters['sessionKey']})
+  };
+
   return <NoSsr>
            <ThemeProvider theme={theme}>
-             <SecurityStateProvider>
+             <SecurityStateProvider initialSecurityState={initialSecurityState}>
                <Provider store={store}>
-                 <SecureYProvider initialYState={{slices: [{store, slice: 'data', //logging: true,
-                                                            providers: {webrtc: {options: {signaling: ['ws://localhost:4444'], password: hashParameters['dataKey']}}}},
-                                                           {store, slice: 'editorState',
-                                                            providers: {webrtc: {options: {signaling: ['ws://localhost:4444'], password: hashParameters['sessionKey']}}}}]
-                 }}>
+                 <SecuredYProvider store={store}>
                    <Layout title={ title }
                            drawer={ <Form/> }
 	                   tabs={ tabs }
                    >
                      <Table/>
                    </Layout>
-                 </SecureYProvider>
+                 </SecuredYProvider>
                </Provider>
              </SecurityStateProvider>
            </ThemeProvider>

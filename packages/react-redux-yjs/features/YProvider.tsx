@@ -1,4 +1,4 @@
-import { useReducer, useState, createContext, useContext, useEffect, PropsWithChildren } from 'react';
+import { useReducer, useState, createContext, useContext, useEffect, PropsWithChildren, useMemo } from 'react';
 
 import * as Y from 'yjs';
 import * as YWebrtc from 'y-webrtc';
@@ -24,22 +24,11 @@ export interface SliceState {
   logging?: boolean | (() => void)
 }
 
-interface YState {
+export interface YState {
   slices: SliceState[]
 }
 
-const ACTIONS = {};
-
-type ActionType = keyof typeof ACTIONS;
-
-function reducer(state: Partial<YState>, action: {type: ActionType, payload: any}) {
-  switch(action.type) {
-    default:
-      return state;
-  }
-}
-
-const YContext = createContext<Partial<YState>>({});
+const YContext = createContext<Partial<YState|undefined>>({});
 const YContextDispatch = createContext<any>(null);
 export function useYContext() {
   return useContext(YContext);
@@ -71,7 +60,7 @@ async function configureSliceAsync(yContext: Partial<YState>) {
 }
 
 function configureSlice(sliceState: SliceState) {
-  sliceState.doc = sliceState.doc || new Y.Doc();
+  sliceState.doc = /*sliceState.doc ||*/ new Y.Doc();
   if(sliceState.logging) {
     const logFn = sliceState.logging === true ? console.log : sliceState.logging;
     sliceState.doc.on('update', (_, origin:any) => { logFn( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
@@ -79,34 +68,27 @@ function configureSlice(sliceState: SliceState) {
 
   const webrtc = sliceState.providers.webrtc;
   if(webrtc?.room) {
-    webrtc.provider = /*webrtc.provider ||*/ new YWebrtc.WebrtcProvider(webrtc.room, sliceState.doc, webrtc.options);
+    webrtc.provider = webrtc.options.signaling && webrtc.options.signaling?.length > 0 &&
+     /*webrtc.provider ||*/ new YWebrtc.WebrtcProvider(webrtc.room, sliceState.doc, webrtc.options) || undefined;
   }
 
   if(sliceState.store && sliceState.slice)
     sliceState.unbind = bind(sliceState.doc, sliceState.store, sliceState.slice);
 
   return () => { sliceState.unbind && sliceState.unbind();
+                 sliceState.providers.webrtc?.provider?.disconnect();
                  sliceState.providers.webrtc?.provider?.destroy(); };
 }
 
 export function YConfigurator() {
-  const yContextOrig = useYContext();
-  const [yContext, setYContext] = useState<Partial<YState>>()
-
-  useEffect(
-    () => {
-      const asyncEffect = async () => {
-        setYContext( await configureSliceAsync(yContextOrig) );
-      }
-      asyncEffect()
-    }, [yContextOrig]
-  );
-  //console.log({yContext})
+  const yContext = useYContext();
+  //const setYContext = useYContextDispatch();
 
   useEffect(
     () => {
       if(yContext) {
-        const destructors = yContext.slices?.map( sliceState => configureSlice(sliceState) );
+        const destructors = yContext?.slices?.map( sliceState => configureSlice(sliceState) );
+	//setYContext(yContext);
         // TODO use dispatch to set updated sliceStates?
         return () => { destructors?.map( f => f() ) }
       }
@@ -121,13 +103,22 @@ export interface YProviderProps {
 }
 
 export function YProvider({children, initialYState}: PropsWithChildren<YProviderProps>) {
-  const [state, dispatch] = useReducer(reducer, initialYState)
+  const [state, dispatch] = useState<Partial<YState>>()
+
+  useEffect(
+    () => {
+      const asyncEffect = async () => {
+        dispatch( await configureSliceAsync(initialYState) );
+      }
+      asyncEffect()
+    }, [initialYState]
+  );
 
   return (
     <YContext.Provider value={state}>
       <YContextDispatch.Provider value={dispatch}>
-        <YConfigurator/>
-        {children}
+        { state && <YConfigurator/> }
+        { children }
       </YContextDispatch.Provider>
     </YContext.Provider>
   )

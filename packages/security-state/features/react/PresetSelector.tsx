@@ -7,7 +7,7 @@ import { Grid, Card, CardActionArea, CardContent, CardMedia, CardHeader, Typogra
 
 function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: boolean, index: number}) {
   const securityStateDispatch = useSecurityStateDispatchContext();
-  const onClick = useCallback( () => securityStateDispatch && securityStateDispatch({ attackVector: 'syncServerWebrtc',
+  const onClick = useCallback( () => securityStateDispatch && securityStateDispatch({ attackVector: 'syncServerSessionWebrtc',
                                                                                       type: ACTIONS.selectPreset,
                                                                                       payload: {index} }),
 			       [index, securityStateDispatch] );
@@ -15,7 +15,7 @@ function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: b
   return (
     <Card onClick={onClick}
           variant='outlined'
-          sx={{ margin: '1em', maxWidth: '500px', backgroundColor: raised ? 'highlight' : '' }}>
+          sx={{ margin: '1em', maxWidth: '350px', backgroundColor: raised ? 'highlight' : '' }}>
       <CardActionArea sx={{height: '100%'}}>
         <CardContent>
           { Icon && <CardMedia component={Icon}
@@ -32,12 +32,12 @@ function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: b
   );
 }
 
-const { syncServerWebrtc } = attackVectors;
-const { presets } = syncServerWebrtc;
+const { syncServerSessionWebrtc } = attackVectors;
+const { presets } = syncServerSessionWebrtc;
 
 export function PresetSelector() {
   const securityState = useSecurityStateContext();
-  const activePreset = securityState?.syncServerWebrtc?.preset;
+  const activePreset = securityState?.syncServerSessionWebrtc?.preset;
   return <Grid container={true}>
            { presets?.map( (preset, i) => <PresetSelectorCard key={'preset'+i}
                                                               preset={preset}

@@ -10,8 +10,8 @@ import { useSecurityStateContext } from './SecurityStateProvider';
 type OnClick = (event: React.MouseEvent<HTMLElement>) => void
 
 export function SecurityIndicator({fakeLevel, onClick}: {fakeLevel?: SECURITY_LEVEL, onClick?: OnClick}) {
-  const { assessment } = useSecurityStateContext()?.syncServerWebrtc || {};
-  const level = fakeLevel || assessment;  // TODO
+  const { assessment } = useSecurityStateContext()?.syncServerSessionWebrtc || {};  // TODO minimum
+  const level = fakeLevel || assessment;
   var icon;
   switch(level) {
     case SECURITY_LEVEL.advanced:

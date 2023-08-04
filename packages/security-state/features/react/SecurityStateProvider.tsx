@@ -2,11 +2,14 @@ import { useReducer, createContext, ReactNode, useContext } from 'react';
 import { attackVectors, AttackVectors } from '../attackVectors';
 import * as _ from 'lodash';
 import { assessSecurityLevel } from '../implementation/config/assess';  // TODO enforce
+import {NestCamWiredStandTwoTone} from '@mui/icons-material';
 
 type SecurityState = any;  //TODO
 
-const defaultSecurityState: SecurityState = {
-  syncServerWebrtc: attackVectors.syncServerWebrtc.defaultState
+// TODO calc by mapping
+export const defaultSecurityState: SecurityState = {
+  syncServerDataWebrtc: attackVectors.syncServerDataWebrtc.defaultState,
+  syncServerSessionWebrtc: attackVectors.syncServerSessionWebrtc.defaultState
 };
 
 const SecurityStateContext = createContext<SecurityState>({});

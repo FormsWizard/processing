@@ -1,6 +1,7 @@
 import { SERVER } from '../../model/environment/model';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { ReactElement } from 'react';
+import { SYNC } from '../../model/config/sync/model'
 
 interface UI {
   title: string,
@@ -14,12 +15,14 @@ export interface Preset {
 };
 
 export type SignalingURL = string;
+export type Password = string;
 
-export interface SyncServerWebrtcSettings {
+export interface SyncServerWebrtcSettings extends SYNC {
   signaling: SignalingURL[]
+  password?: Password
 };
 
 export interface SyncServerWebrtcPreset extends Preset {
   env: SERVER,
-  settings: SyncServerWebrtcSettings
+  settings: Partial<SyncServerWebrtcSettings>
 };

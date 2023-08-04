@@ -35,8 +35,8 @@ export function ConnectionIndicator({interval=3, fakeOnline, onClick}: {interval
   }, [interval]);
 
   const yState = useYContext();
-  const realOnlinePerSlice = (yState.slices||[]).map( sliceState => Object.values(sliceState.providers).map( provider => Array.from(provider.provider?.awareness.states||[]).length )
-                                                                                                       .reduce((i, acc) => i+acc, 0) )
+  const realOnlinePerSlice = (yState?.slices||[]).map( sliceState => Object.values(sliceState.providers).map( provider => Array.from(provider.provider?.awareness.states||[]).length )
+                                                                                                        .reduce((i, acc) => i+acc, 0) )
   const realOnline = Math.max.apply(Math, [0, ...realOnlinePerSlice])
   const online = fakeOnline || realOnline;
 
