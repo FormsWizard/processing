@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement, useCallback, useState } from 'react';
 
 import ProcessingMenu from '../menu/ProcessingMenu';
 
@@ -29,6 +29,9 @@ export type LayoutProps = {
 };
 
 export function Layout({children, title, drawer, drawerWidth='30%', tabs}: PropsWithChildren<LayoutProps>) {
+  const [tabIdx, setTabIdx] = useState(2);
+  const tabContent = tabs[tabIdx].content;
+
   const login = <>
                   <IconButton
                     aria-label="account of current user"
@@ -49,9 +52,6 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
 		    <SecurityIndicatorMenu/>
                     { login }
                   </>;
-
-  const tabIdx = 2;
-  const tabContent = tabs[tabIdx].content;
 
   const toolbarPlaceholder = <Toolbar/>;  // prevent the AppBar from being in front of our content
 
@@ -93,7 +93,8 @@ export function Layout({children, title, drawer, drawerWidth='30%', tabs}: Props
 
                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                  <Tabs value={ tabIdx } /*onChange={handleChange}*/>
-                   { tabs.map( (tab, idx) => <Tab key={'tab'+idx} icon={tab.icon} label={tab.label} /> ) }
+                   { tabs.map( (tab, idx) => { const onClick = useCallback( () => setTabIdx(idx), [idx] );
+			                       return <Tab key={'tab'+idx} icon={tab.icon} label={tab.label} onClick={onClick} /> } ) }
                  </Tabs>
                </Box>
 	       { tabContent }
