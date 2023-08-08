@@ -10,6 +10,8 @@ cp packages/edit-timeline packages/edit-mynewvisualization
 
  * Edit `packages/edit-mynewvisualization/package.json` to add your required dependencies
 
+ * add `"edit-mynewvisualization": "workspace:*"` in `packages/example/package.json` as dependency.
+
 ```sh
 pnpm install
 ```
