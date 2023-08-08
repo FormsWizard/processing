@@ -16,6 +16,7 @@
     "edit-table": "workspace:*",
     "edit-timeline": "workspace:*",
     "state": "workspace:*",
+    "edit-kanban": "workspace:*",
     "secured-react-redux-yjs": "workspace:*",
     "security-state": "workspace:*",
     "@mui/base": "5.0.0-beta.8",
