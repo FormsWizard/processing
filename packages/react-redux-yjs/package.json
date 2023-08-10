@@ -13,6 +13,7 @@
     "dev": "npm run build -- --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "redux-yjs-bindings": "^0.3.1",
     "y-indexeddb": "^9.0.11",
     "y-webrtc": "^10.2.5",
