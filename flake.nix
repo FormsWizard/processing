@@ -43,8 +43,8 @@
           buildInputs = [pnpm-lock-export gnused];
           buildPhase = ''
             pnpm-lock-export --schema yarn.lock@v1
-            sed -i 's/"workspace:\*"/"*"/g' package.json
-            sed -i 's/"workspace:\*"/"*"/g' packages/${scope}/package.json
+            #sed -i 's/"workspace:\*"/"*"/g' package.json
+            #sed -i 's/"workspace:\*"/"*"/g' packages/${scope}/package.json
           '';
           installPhase = ''
             cp -r . $out
@@ -55,17 +55,18 @@
         fw-processing-react-redux-yjs-nodeModules = stdenv.mkDerivation rec {
           inherit version;
           name = "${pname}-${scope}-nodeModules-${version}";
-          src = fw-processing-react-redux-yjs-yarn;
-          buildInputs = [yarn] ++ [nodejs];
+          src = #fw-processing-react-redux-yjs-turbo;
+                fw-processing-react-redux-yjs-yarn;
+          buildInputs = [nodePackages.pnpm yarn nodejs];
           buildPhase = ''
             export HOME=$(mktemp -d)
 
-            yarn --ignore-scripts
-            #yarn
+            pnpm install
 
-            ( cd packages/${scope}
-              yarn
-            )
+            #yarn --ignore-scripts
+            #( cd packages/${scope}
+            #  yarn
+            #)
           '';
           installPhase = ''
             cp -r . $out
@@ -73,7 +74,8 @@
           meta = meta_ // {description = "";};
           outputHashMode = "recursive";
           #outputHash = lib.fakeHash;
-          outputHash = (lib.importJSON ./flake.hashes.json).react-redux-yjs;
+          outputHash = "sha256-y4B0+4W6Ng8Nb/SqdiihByojBvLDqfgs/Cvi7oU5ERM=";
+          #outputHash = (lib.importJSON ./flake.hashes.json).react-redux-yjs;
           allowedReferences = [bash nodejs];
           __structuredAttrs = true;
           unsafeDiscardReferences.out = true;
@@ -85,14 +87,12 @@
           name = "${pname}-${scope}-nodePackage-${version}";
           src = fw-processing-react-redux-yjs-yarn;
           buildInputs = [yarn] ++ [fw-processing-react-redux-yjs-nodeModules] ++ [nodejs];
-          #buildInputs = [yarn] ++ [] ++ [turbo nodejs];
           buildPhase = ''
             ln -s ${fw-processing-react-redux-yjs-nodeModules}/node_modules .
-            cp ${fw-processing-react-redux-yjs-nodeModules}/yarn.lock .
-            ls -l
+            cp ${fw-processing-react-redux-yjs-nodeModules}/yarn.lock . || true
+
             ln -s ${fw-processing-react-redux-yjs-nodeModules}/packages/${scope}/node_modules packages/${scope}
-            cp ${fw-processing-react-redux-yjs-nodeModules}/packages/${scope}/yarn.lock packages/${scope}
-            ls -l packages/${scope}
+            cp ${fw-processing-react-redux-yjs-nodeModules}/packages/${scope}/yarn.lock packages/${scope}  || true
           '';
           installPhase = ''
             cp -r . $out
@@ -103,23 +103,26 @@
         "${pname}" = fw-processing-react-redux-yjs-nodePackage;
 
         "${pname}-dev" = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [ yarn fw-processing-react-redux-yjs-nodePackage nodejs ];
+          nativeBuildInputs = with pkgs; [ yarn nodejs ];
           shellHook = ''
             export HOME=$(mktemp -d)
-            cp -rL ${fw-processing-react-redux-yjs-nodePackage} ~/nodePackage
+            ls -l ${fw-processing-react-redux-yjs-nodeModules} ~/nodePackage
+            #cp -rL ${fw-processing-react-redux-yjs-nodePackage} ~/nodePackage
             chmod -R +w ~/
             cd ~/nodePackage
+
             ( cd packages/react-redux-yjs/node_modules
-              rm -r eslint-config-custom style tsconfig
-              ln -s ../../eslint-config-custom .
-              ln -s ../../react-redux-yjs .
-              ln -s ../../style .
-              ln -s ../../tsconfig .
+              #rm -r eslint-config-custom style tsconfig
+              #ln -s ../../eslint-config-custom .
+              #ln -s ../../react-redux-yjs .
+              #ln -s ../../style .
+              #ln -s ../../tsconfig .
             )
 
-            rm -r node_modules/turbo
-            pnpm install
-            pnpm build
+            #rm -r node_modules/turbo
+            yes | pnpm install  ## TODO
+            pnpm --offline --frozen-lockfile install
+            pnpm --offline build
 
             #yarn --offline install
             #rm -r node_modules/turbo
