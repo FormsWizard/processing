@@ -5,7 +5,7 @@ import { deriveState } from './deriveState';
 import { SECURITY_LEVEL } from '../..//model';
 
 const defaultPolicy = SECURITY_LEVEL.dubious;  // TODO
-const defaultPreset = syncServerWebrtcPresets[1];
+const defaultPreset = syncServerWebrtcPresets[3];
 
 export function defaultSyncState(userSettings: Partial<SyncServerWebrtcSettings>) {
   return deriveState(syncThreatModel, defaultPolicy, defaultPreset, userSettings)

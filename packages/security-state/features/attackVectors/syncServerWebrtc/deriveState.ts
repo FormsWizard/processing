@@ -19,8 +19,7 @@ function deriveSettings(presetSettings: Partial<SyncServerWebrtcSettings>, userS
     enabled,
     signaling: enabled === SYNC_enabled.enabled && settings.signaling || [],
     protocol: SYNC_protocol.webrtc,
-    //e2e_encryption: SYNC_e2e_encryption.builtin,  // TODO
-    e2e_encryption: SYNC_e2e_encryption.off,
+    e2e_encryption: (settings.password?.length||0) >= 10 ? SYNC_e2e_encryption.builtin : SYNC_e2e_encryption.off,
     connection_encryption: areAllSignallingServersEncryped(settings) ? SYNC_connection_encryption.tls : SYNC_connection_encryption.off
   }
 }

@@ -28,6 +28,10 @@ export const syncThreatModel: THREAT_MODEL = {
       {
         e2e_encryption: SYNC_e2e_encryption.gpg,
         connection_encryption: SYNC_connection_encryption.tls
+      },
+      {
+        e2e_encryption: SYNC_e2e_encryption.builtin,
+        connection_encryption: SYNC_connection_encryption.tls
       }
     ]
   },

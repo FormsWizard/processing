@@ -24,7 +24,7 @@ export const App = ({
 }: AppProps) => {
 
   const themeMode = 'light' as 'light' | 'dark'  // TODO
-  const theme = useMemo(() => getTheme(themeMode), [themeMode])
+  const theme = {} //useMemo(() => getTheme(themeMode), [themeMode])
 
   const hash = typeof location != 'undefined' && location.hash.slice(1);
   const hashParameters = !hash ? {} : Object.fromEntries(new URLSearchParams(hash));
