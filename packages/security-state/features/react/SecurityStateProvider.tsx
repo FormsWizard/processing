@@ -9,7 +9,9 @@ type SecurityState = any;  //TODO
 // TODO calc by mapping
 export const defaultSecurityState: SecurityState = {
   syncServerDataWebrtc: attackVectors.syncServerDataWebrtc.defaultState,
-  syncServerSessionWebrtc: attackVectors.syncServerSessionWebrtc.defaultState
+  syncServerSessionWebrtc: attackVectors.syncServerSessionWebrtc.defaultState,
+  syncServerDataWebsocket: attackVectors.syncServerDataWebsocket.defaultState,
+  syncServerSessionWebsocket: attackVectors.syncServerSessionWebsocket.defaultState
 };
 
 const SecurityStateContext = createContext<SecurityState>({});
@@ -35,7 +37,7 @@ function reducer(state: SecurityState, action: {attackVector: AttackVectors, typ
     case ACTIONS.selectPreset:
       const newState = deriveState(threatModel, policy, presets[index], settings);
       state[action.attackVector] = newState;
-      return _.clone(state);  // cloning is required to cause a rerender
+      return _.clone(state);  // cloning is required to cause a rerendering
     default:
       return state;
   }

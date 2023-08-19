@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Popper } from 'style';
-import { ConnectionIndicator, OnlineStatus } from './ConnectionIndicator';
+import { ConnectionIndicator, OnlineStatus, onlineCount } from './ConnectionIndicator';
 import { useYContext } from 'react-redux-yjs';
 import { Grid } from '@mui/material';
 import { GridOn, Edit } from '@mui/icons-material';
@@ -21,7 +21,8 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
                              img: GridOn},
                       editorState: {title: 'Session',
                                     img: Edit}};
-  const providerDefs = {webrtc: {title: 'WebRTC'}};
+  const providerDefs = {webrtc: {title: 'WebRTC'},
+                        websocket: {title: 'Websocket'}};
 
   const Content =
     <Grid>
@@ -34,8 +35,8 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
                  </h2>
                  { Object.entries(providerDefs).map( ([providerId, providerDef]) => {
                    const provider = providers && providers[providerId];
-                   const online = Array.from(provider?.provider?.awareness.states||{}).length;
-                   return <Grid key={providerId} sx={{paddingLeft: '0.5rem'}}>
+                   const online = onlineCount(provider)
+			   return <Grid key={providerId} sx={{paddingLeft: '0.5rem'}}>
                             <h3>
                               {providerDef.title} &nbsp;
                               <Grid sx={{display: 'contents', color: 'text.secondary'}}><OnlineStatus online={online}/></Grid>
@@ -46,6 +47,10 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
                                   {provider?.options.password ?
                                     <p><VpnKey sx={{verticalAlign: 'bottom'}}/> Passphrase: {provider?.options.password}</p> :
                                     <p><VpnKeyOff sx={{verticalAlign: 'bottom'}}/> No Password</p>}
+                                </>
+                              }
+                              { providerId=='websocket' && <>
+                                  <p><Link sx={{verticalAlign: 'bottom'}}/>Url: {provider?.url}</p>
                                 </>
                               }
                             </Grid>

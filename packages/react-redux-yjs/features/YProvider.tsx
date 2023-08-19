@@ -2,17 +2,25 @@ import { useReducer, useState, createContext, useContext, useEffect, PropsWithCh
 
 import * as Y from 'yjs';
 import * as YWebrtc from 'y-webrtc';
+import * as YWebsocket from 'y-websocket';
 import { Store } from '@reduxjs/toolkit';
 import { bind } from 'redux-yjs-bindings';
 
-interface WebrtcProvider {
+export interface WebrtcProvider {
   provider?: YWebrtc.WebrtcProvider
   options: YWebrtc.ProviderOptions
   room?: string  // defaults to sliceState.slice
 }
 
+export interface WebsocketProvider {
+  provider?: YWebsocket.WebsocketProvider
+  url: string
+  room?: string  // defaults to sliceState.slice
+}
+
 interface Providers {
   webrtc?: WebrtcProvider
+  websocket?: WebsocketProvider
 }
 
 export interface SliceState {
@@ -50,9 +58,13 @@ async function configureSliceAsync(yContext: Partial<YState>) {
     const webrtc = sliceState.providers.webrtc;
     if(webrtc) {
       webrtc.room = webrtc.room ||
-                   webrtc.options.password && `${sliceState.slice}_${await hash(webrtc.options.password)}` ||
-	           sliceState.slice ||
-	           crypto.randomUUID();
+                    webrtc.options.password && `${sliceState.slice}_${await hash(webrtc.options.password)}` ||
+                    sliceState.slice;
+    }
+    const websocket = sliceState.providers.websocket;
+    if(websocket) {
+      websocket.room = websocket.room ||
+                       sliceState.slice;
     }
     return sliceState
   }))
@@ -72,12 +84,19 @@ function configureSlice(sliceState: SliceState) {
      /*webrtc.provider ||*/ new YWebrtc.WebrtcProvider(webrtc.room, sliceState.doc, webrtc.options) || undefined;
   }
 
+  const websocket = sliceState.providers.websocket;
+  if(websocket?.room && websocket.url) {
+    websocket.provider = new YWebsocket.WebsocketProvider(websocket.url, websocket.room, sliceState.doc);
+  }
+
   if(sliceState.store && sliceState.slice)
     sliceState.unbind = bind(sliceState.doc, sliceState.store, sliceState.slice);
 
   return () => { sliceState.unbind && sliceState.unbind();
                  sliceState.providers.webrtc?.provider?.disconnect();
-                 sliceState.providers.webrtc?.provider?.destroy(); };
+                 sliceState.providers.webrtc?.provider?.destroy();
+                 sliceState.providers.websocket?.provider?.disconnect();
+                 sliceState.providers.websocket?.provider?.destroy(); };
 }
 
 export function YConfigurator() {

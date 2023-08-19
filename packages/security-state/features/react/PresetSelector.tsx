@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { attackVectors } from "../attackVectors";
+import { AttackVectors, attackVectors } from "../attackVectors";
 import { useSecurityStateContext, useSecurityStateDispatchContext, ACTIONS } from './SecurityStateProvider';
 import { Preset } from '../attackVectors/syncServerWebrtc/presets.model'
 import * as _ from 'lodash';
 import { Grid, Card, CardActionArea, CardContent, CardMedia, CardHeader, Typography } from '@mui/material';
 
-function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: boolean, index: number}) {
+function PresetSelectorCard({preset, raised, index, attackVector}: {preset: Preset, raised?: boolean, index: number, attackVector: string}) {
   const securityStateDispatch = useSecurityStateDispatchContext();
-  const onClick = useCallback( () => securityStateDispatch && securityStateDispatch({ attackVector: 'syncServerSessionWebrtc',
+  const onClick = useCallback( () => securityStateDispatch && securityStateDispatch({ attackVector,
                                                                                       type: ACTIONS.selectPreset,
                                                                                       payload: {index} }),
 			       [index, securityStateDispatch] );
@@ -32,16 +32,28 @@ function PresetSelectorCard({preset, raised, index}: {preset: Preset, raised?: b
   );
 }
 
-const { syncServerSessionWebrtc } = attackVectors;
-const { presets } = syncServerSessionWebrtc;
+const attackVectorNames: any = {
+  syncServerSessionWebrtc: 'Sync via WebRTC',
+  syncServerSessionWebsocket: 'Sync via Websocket'
+}
 
 export function PresetSelector() {
   const securityState = useSecurityStateContext();
-  const activePreset = securityState?.syncServerSessionWebrtc?.preset;
-  return <Grid container={true}>
-           { presets?.map( (preset, i) => <PresetSelectorCard key={'preset'+i}
-                                                              preset={preset}
-                                                              raised={_.isEqual(preset.settings, activePreset?.settings)}
-                                                              index={i} /> ) }
-         </Grid>
+
+  return <>
+    { (['syncServerSessionWebrtc', 'syncServerSessionWebsocket'] as AttackVectors[]).map( attackVector => {
+      const presets = attackVectors[attackVector]['presets'];
+      const activePreset = securityState && securityState[attackVector]?.preset;
+      return <div key={attackVector}>
+               <h2>{ attackVectorNames[attackVector] }</h2>
+               <Grid container={true}>
+                 { presets?.map( (preset, i) => <PresetSelectorCard key={'preset'+i}
+                                                                    preset={preset}
+                                                                    raised={_.isEqual(preset.settings, activePreset?.settings)}
+                                                                    index={i}
+	                                                            attackVector={attackVector} /> ) }
+               </Grid>
+             </div>
+    }) }
+  </>
 }

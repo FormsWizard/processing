@@ -4,6 +4,8 @@ import { useYContext } from 'react-redux-yjs';
 import { CONNECTION } from 'style';
 import { IconButton } from '@mui/material';
 
+import { WebrtcProvider, WebsocketProvider } from 'react-redux-yjs/features/YProvider'
+
 //import SignalWifi2BarIcon from '@mui/icons-material/SignalWifi2Bar';
 //import SignalWifi3BarIcon from '@mui/icons-material/SignalWifi3Bar';
 import { SignalWifi0Bar, SignalWifi1Bar, SignalWifi4Bar,
@@ -27,6 +29,24 @@ export function OnlineStatus({online}: {online: number}) {
 type Seconds = number;
 type OnClick = (event: React.MouseEvent<HTMLElement>) => void
 
+export function onlineCount(provider: any /*WebrtcProvider|WebsocketProvider*/) {
+  return provider?.provider?.wsconnected === false ? 0 :
+         Array.from(provider?.provider?.awareness.states||{}).length;
+}
+
+/** For each slice we calculate the sumOfPeers for the list of peers per provider.
+ *  The client itself might be connected via different providers but should be count only once.
+ **/
+function sumOfPeers(listOfPeerCount: number[]) {
+  // TODO unique by userId
+  const listOfPeerCountWithoutDisconnected = listOfPeerCount.filter(i => i>0);
+  const providersOnline = listOfPeerCountWithoutDisconnected.length;
+  return providersOnline == 0 ? 0 :
+         listOfPeerCount.reduce((i, acc) => i+acc, 0)
+         - providersOnline  // client itself per provider
+	 + 1;  // client itself
+}
+
 export function ConnectionIndicator({interval=3, fakeOnline, onClick}: {interval?: Seconds, fakeOnline?: number, onClick?: OnClick}) {
   const [_lastUpdate, setLastUpdate] = useState(new Date());
   useEffect(() => {
@@ -35,8 +55,8 @@ export function ConnectionIndicator({interval=3, fakeOnline, onClick}: {interval
   }, [interval]);
 
   const yState = useYContext();
-  const realOnlinePerSlice = (yState?.slices||[]).map( sliceState => Object.values(sliceState.providers).map( provider => Array.from(provider.provider?.awareness.states||[]).length )
-                                                                                                        .reduce((i, acc) => i+acc, 0) )
+  const realOnlinePerSlice = (yState?.slices||[]).map( sliceState => sumOfPeers( Object.values(sliceState.providers)
+										 .map( provider => onlineCount(provider) )))
   const realOnline = Math.max.apply(Math, [0, ...realOnlinePerSlice])
   const online = fakeOnline || realOnline;
 

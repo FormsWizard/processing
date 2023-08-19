@@ -1,11 +1,13 @@
 import syncServerWebrtc from './syncServerWebrtc';
+import syncServerWebsocket from './syncServerWebsocket';
 
 export const attackVectors = {
 //    appServer: SERVER.local,
 //    storageServer: SERVER.disabled,
   syncServerDataWebrtc: syncServerWebrtc,
   syncServerSessionWebrtc: syncServerWebrtc,
-//    syncServerWebsocket: SERVER.disabled,
+  syncServerDataWebsocket: syncServerWebsocket,
+  syncServerSessionWebsocket: syncServerWebsocket,
 //    client: CLIENT.limited  // TODO: default should be untrusted, till confirmed
 };
 

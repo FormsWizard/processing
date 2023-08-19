@@ -12,10 +12,12 @@ export function SecuredYProvider({children, store}: PropsWithChildren<Props>) {
 
   const initialYState: Partial<YState> = {slices: [{store, slice: 'data', //logging: true,
                                                     providers: {webrtc: {options: {signaling: securityState.syncServerSessionWebrtc.settings.signaling,  // TOOD till now all need share the same
-                                                                                   password: securityState.syncServerDataWebrtc.settings.password}}}},
+                                                                                   password: securityState.syncServerDataWebrtc.settings.password}},
+                                                                websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}},
                                                    {store, slice: 'editorState',
                                                     providers: {webrtc: {options: {signaling: securityState.syncServerSessionWebrtc.settings.signaling ,
-                                                                                   password: securityState.syncServerSessionWebrtc.settings.password}}}}]}
+                                                                                   password: securityState.syncServerSessionWebrtc.settings.password}},
+                                                                websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}}]}
 
   return (
     <YProvider initialYState={initialYState}>
