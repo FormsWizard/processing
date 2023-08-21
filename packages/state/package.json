@@ -2,20 +2,19 @@
   "name": "state",
   "version": "0.0.0",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
-    "build": "tsup index.tsx --format esm --dts",
-    "dev": "#npm run build -- --watch"
+    "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-    "lodash": "^4.17.21",
-    "react-redux": "^8.1.1"
+    "material-react-table": "^1.14.0",
+    "react-redux": "^8.1.1",
+    "redux": "^4.2.1",
+    "redux-yjs-bindings": "^0.3.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.197",
     "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",

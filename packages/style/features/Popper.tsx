@@ -21,7 +21,7 @@ export function Popper({Button, Content, id}: {Button: typeof mui.IconButton, Co
         <Button onClick={handleClick} aria-describedby={id} />
         <mui.Popper id={id} open={open} anchorEl={anchorEl} sx={{ zIndex: 1, paddingRight: '1rem' }}>
           <mui.Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-	    { Content }
+	    { Content as any }
           </mui.Box>
         </mui.Popper>
       </div>

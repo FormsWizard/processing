@@ -9,16 +9,19 @@
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.197",
     "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@types/react": "^18.2.20",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "state": "workspace:*",
-    "vis-timeline": "^7.7.2",
     "vis-data": "^7.1.6",
+    "vis-timeline": "^7.7.2",
     "vis-util": "^5.0.3"
   }
 }

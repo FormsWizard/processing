@@ -14,6 +14,7 @@ import {
 
 export function Form() {
   const tableData = useAppSelector(selectData);
+  // @ts-ignore
   const { selectedRows } = useAppSelector(selectEditorState);
   const dispatch = useAppDispatch();
 

@@ -13,23 +13,22 @@
     "dev": "#npm run build -- --watch"
   },
   "dependencies": {
-    "style": "workspace:*",
-    "lodash": "^4.17.21",
     "@mui/base": "5.0.0-beta.8",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
-    "react": "^18.2.0"
-  },
-  "peerDependencies": {
+    "@types/react": "^18.2.20",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "style": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
+    "@types/lodash": "^4.14.197",
     "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "jest": "^29.6.1",
     "ts-jest": "^29.1.1",
     "tsconfig": "workspace:*",
-    "tsup": "^7.1.0",
     "typescript": "^5.1.6"
   }
 }

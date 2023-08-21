@@ -9,6 +9,7 @@
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.197",
     "eslint": "^8.45.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
@@ -20,6 +21,7 @@
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "@mui/x-date-pickers": "^6.10.0",
+    "@types/react": "^18.2.20",
     "material-react-table": "^1.14.0",
     "state": "workspace:*"
   }

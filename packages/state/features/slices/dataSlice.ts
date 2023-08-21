@@ -45,6 +45,7 @@ export const { setTableData, setRowData, setCellData } =
   dataSlice.actions;
 
 export const selectData = (state: RootState) =>
+  // @ts-ignore
   state.data.data || initialState.data;
 
 export default dataSlice.reducer;
