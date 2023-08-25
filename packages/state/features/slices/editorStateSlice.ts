@@ -36,4 +36,4 @@ export const { setRowSelection } =
 export const selectEditorState = (state: RootState) =>
   state.editorState || initialState;
 
-export default editorStateSlice.reducer;
+export const editorStateReducer = editorStateSlice.reducer;

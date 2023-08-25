@@ -1,17 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { dataReducer } from '../slices/dataSlice';
-import { editorStateReducer } from '../slices/editorStateSlice';
-import { schemaReducer, keysReducer, cryptedDataReducer } from 'project-state';
+import { schemaReducer } from '../slices/schemaSlice';
+import { keysReducer } from '../slices/keysSlice';
+import { cryptedDataReducer } from '../slices/cryptedDataSlice';
 import { enhanceReducer } from 'react-redux-yjs';
-import * as _ from 'lodash';
 
 export const store = configureStore({
   reducer: {
-    data: enhanceReducer(dataReducer, 'data'),
-    editorState: enhanceReducer(editorStateReducer, 'editorState'),
     schema: enhanceReducer(schemaReducer, 'schema'),
     keys: enhanceReducer(keysReducer, 'keys'),
-    cryptedData: enhanceReducer(cryptedDataReducer, 'cryptedData'),
+    cryptedData: enhanceReducer(cryptedDataReducer, 'cryptedData')
   },
 });
 

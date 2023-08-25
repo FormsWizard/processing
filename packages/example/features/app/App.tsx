@@ -15,6 +15,8 @@ import { Table } from 'edit-table';
 import { Form } from 'edit-form';
 import { tabs } from '../app/Tabs';
 
+import { Wip } from 'import';
+
 export interface AppProps {
   title?: string;
 }
@@ -44,6 +46,7 @@ export const App = ({
                            drawer={ <Form/> }
 	                   tabs={ tabs }
                    >
+		     <Wip/>
                      <Table/>
                    </Layout>
                  </SecuredYProvider>

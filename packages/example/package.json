@@ -15,6 +15,7 @@
     "edit-form": "workspace:*",
     "edit-table": "workspace:*",
     "edit-timeline": "workspace:*",
+    "import": "workspace:*",
     "state": "workspace:*",
     "secured-react-redux-yjs": "workspace:*",
     "security-state": "workspace:*",

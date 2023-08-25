@@ -1,7 +1,7 @@
 import { SyncServerWebsocketPreset } from './presets.model';
 import { SERVER } from '../../model/environment/model';
 import { SYNC_enabled } from '../../model/config/sync/model';
-import { Computer, /*Cloud,*/ CloudOff } from '@mui/icons-material';
+import { CloudOff, Computer, Cloud } from '@mui/icons-material';
 
 export const syncServerWebsocketPresets: SyncServerWebsocketPreset[] = [
   { env: SERVER.trusted,
@@ -18,6 +18,22 @@ export const syncServerWebsocketPresets: SyncServerWebsocketPreset[] = [
            title: 'Local server',
 	   subtitle: 'without tls',
 	   body: <>You will have to start the server yourself with the following command: <i>`./node_modules/y-websocket/bin/server.js`</i></>
+         }
+  },
+  { env: SERVER.limited,
+    settings: { url: 'wss://yjs-websocket.winzlieb.eu' },  // TODO a working server
+    _ui: { title: 'Public Websocket',
+           subtitle: 'with tls',
+           icon: Cloud,
+	   body: <>No additional effort required.</>
+         }
+  },
+  { env: SERVER.untrusted,
+    settings: { url: 'ws://yjs-websocket.winzlieb.eu:1234' },  // TODO delete after test&demo
+    _ui: { title: 'Public Websocket',
+           subtitle: 'without tls',
+           icon: Cloud,
+	   body: <>Insecure! For testing only!!!</>
          }
   }
 ];

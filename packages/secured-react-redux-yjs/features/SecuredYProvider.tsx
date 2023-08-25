@@ -17,7 +17,19 @@ export function SecuredYProvider({children, store}: PropsWithChildren<Props>) {
                                                    {store, slice: 'editorState',
                                                     providers: {webrtc: {options: {signaling: securityState.syncServerSessionWebrtc.settings.signaling ,
                                                                                    password: securityState.syncServerSessionWebrtc.settings.password}},
-                                                                websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}}]}
+                                                                websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}},
+                                                   {store, slice: 'schema', logging: true,  // TODO
+                                                    providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
+                                                                                   password: 'TODO1'}},
+                                                                websocket: {url: 'ws://localhost:1234'}}},
+                                                   {store, slice: 'keys', logging: true,
+                                                    providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
+                                                                                   password: 'TODO2'}},
+                                                                websocket: {url: 'ws://localhost:1234'}}},
+                                                   {store, slice: 'cryptedData', logging: true,
+                                                    providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
+                                                                                   password: 'TODO3'}},
+                                                                websocket: {url: 'ws://localhost:1234'}}} ]}
 
   return (
     <YProvider initialYState={initialYState}>

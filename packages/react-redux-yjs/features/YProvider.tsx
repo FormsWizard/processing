@@ -75,7 +75,7 @@ function configureSlice(sliceState: SliceState) {
   sliceState.doc = /*sliceState.doc ||*/ new Y.Doc();
   if(sliceState.logging) {
     const logFn = sliceState.logging === true ? console.log : sliceState.logging;
-    sliceState.doc.on('update', (_, origin:any) => { logFn( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider.signalingUrls && 'webrtc') || 'local' ) });
+    sliceState.doc.on('update', (_, origin:any) => { logFn( 'update from', (origin?.db && 'db') || (origin?.ws && 'ws') || (origin?.provider?.signalingUrls && 'webrtc') || 'local' ) });
   }
 
   const webrtc = sliceState.providers.webrtc;

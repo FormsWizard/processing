@@ -20,7 +20,9 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
   const slicesDefs = {data: {title: 'Data',
                              img: GridOn},
                       editorState: {title: 'Session',
-                                    img: Edit}};
+                                    img: Edit},
+                      schema: {title: 'Schema', img: undefined},
+                      keys: {title: 'Keys', img: undefined}};
   const providerDefs = {webrtc: {title: 'WebRTC'},
                         websocket: {title: 'Websocket'}};
 
@@ -30,7 +32,7 @@ export function ConnectionIndicatorMenu({interval=10}: {interval?: number}) {
         const { providers } = slicesStateByName[sliceId]||{};
         return <div key={sliceId} style={{padding: '0.5rem'}}>
                  <h2>
-                   <sliceDef.img sx={{verticalAlign: 'bottom'}}/> &nbsp;
+		   {sliceDef.img && <sliceDef.img sx={{verticalAlign: 'bottom'}}/>} &nbsp;
                    {sliceDef.title}
                  </h2>
                  { Object.entries(providerDefs).map( ([providerId, providerDef]) => {

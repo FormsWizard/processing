@@ -3,8 +3,7 @@ import { useCallback } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import schema from '../table/example-jsonschema.json';
 
-import { useAppSelector, useAppDispatch } from 'state';
-import { selectData, selectEditorState, setRowData } from 'state';
+import { useAppSelector, selectData, selectEditorState, useAppDispatch, setRowData } from 'state';
 
 import {
   materialRenderers,

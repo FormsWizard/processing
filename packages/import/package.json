@@ -1,0 +1,25 @@
+{
+  "name": "import",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "build": "tsup index.tsx --format esm --dts",
+    "dev": "npm run build -- --watch"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "pgp-provider": "workspace:*",
+    "project-state": "workspace:*",
+    "state": "workspace:*",
+    "@types/react": "^18.2.20"
+  }
+}

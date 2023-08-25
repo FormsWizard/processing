@@ -9,6 +9,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "material-react-table": "^1.14.0",
+    "project-state": "workspace:*",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",
     "redux-yjs-bindings": "^0.3.1",

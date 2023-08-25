@@ -48,4 +48,4 @@ export const selectData = (state: RootState) =>
   // @ts-ignore
   state.data.data || initialState.data;
 
-export default dataSlice.reducer;
+export const dataReducer = dataSlice.reducer;
