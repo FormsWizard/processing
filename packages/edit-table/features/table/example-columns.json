@@ -1,13 +1,19 @@
 [
   {
-    "accessorKey": "name.firstName",
-    "header": "First Name",
-    "size": 150
-  },
-  {
-    "accessorKey": "name.lastName",
-    "header": "Last Name",
-    "size": 150
+    "accessorKey": "name",
+    "header": "Name",
+    "columns": [
+      {
+        "accessorKey": "name.firstName",
+        "header": "First Name",
+        "size": 150
+      },
+      {
+        "accessorKey": "name.lastName",
+        "header": "Last Name",
+        "size": 150
+      }
+    ]
   },
   {
     "accessorKey": "address",

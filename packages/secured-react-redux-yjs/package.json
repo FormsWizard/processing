@@ -6,8 +6,6 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "testWatch": "jest --watch --color",
     "lint": "eslint \"**/*.ts*\"",
     "build": "tsup index.tsx --format esm --dts",
     "dev": "#npm run build -- --watch"

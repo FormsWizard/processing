@@ -1,10 +1,13 @@
 {
   "name": "edit-table",
   "version": "0.0.0",
+  "type": "module",
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
+    "testWatch": "jest --watch --color",
     "lint": "eslint \"**/*.ts*\"",
     "generate:component": "turbo gen react-component"
   },
@@ -18,6 +21,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@jsonforms/core": "^3.1.0",
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "@mui/x-date-pickers": "^6.10.0",

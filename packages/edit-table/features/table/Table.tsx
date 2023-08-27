@@ -7,7 +7,8 @@ import * as _ from 'lodash'
 import { useAppSelector, useAppDispatch } from 'state';
 import { selectData, setCellData, selectEditorState, setRowSelection, Person } from 'state';
 
-import example_columns from './example-columns.json'
+import example_jsonSchema from './example-jsonschema.json';
+import { schema2columns } from './schema2columns';
 
 export const Table = () => {
   const tableInstanceRef = useRef(null);
@@ -18,7 +19,7 @@ export const Table = () => {
   const dispatch = useAppDispatch();
 
   const columns = useMemo(
-    () => example_columns,
+    () => schema2columns(example_jsonSchema),
     [],
   );
 
