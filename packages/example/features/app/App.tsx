@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { SecurityStateProvider, defaultSecurityState } from 'security-state';
 import { defaultSyncState } from 'security-state/features/attackVectors/syncServerWebrtc';
 import { SecuredYProvider } from 'secured-react-redux-yjs';
-import NoSsr from '@mui/base/NoSsr';
+import { NoSsr } from '@mui/base/NoSsr';
 import { ThemeProvider } from '@mui/material/styles'
-import { useMemo } from 'react'
-import { getTheme } from 'style'
+//import { useMemo } from 'react'
+//import { getTheme } from 'style'
 
 import { Layout } from 'layout';
 import { Table } from 'edit-table';

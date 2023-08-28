@@ -19,7 +19,7 @@ export function MenuItem({text, icon, disabled=false}: Item) {
   else
     return (
       <MuiMenuItem disabled={ disabled }>
-        <ListItemIcon>{ icon }</ListItemIcon>
+        <ListItemIcon>{ icon as any }</ListItemIcon>
         <ListItemText>{ text }</ListItemText>
       </MuiMenuItem>
     );

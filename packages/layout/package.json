@@ -9,21 +9,22 @@
     "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/base": "5.0.0-beta.12",
+    "@mui/icons-material": "^5.14.6",
+    "@mui/material": "^5.14.6",
+    "@types/react": "^18.2.21",
+    "react": "^18.2.0",
     "secured-react-redux-yjs": "workspace:*",
     "security-state": "workspace:*",
     "state": "workspace:*",
-    "style": "workspace:*",
-    "@mui/base": "5.0.0-beta.8",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
-    "react": "^18.2.0"
-  },
-  "peerDependencies": {
+    "style": "workspace:*"
   },
   "devDependencies": {
-    "eslint": "^8.45.0",
+    "eslint": "^8.48.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }

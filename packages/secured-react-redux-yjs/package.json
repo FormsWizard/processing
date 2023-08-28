@@ -11,23 +11,23 @@
     "dev": "#npm run build -- --watch"
   },
   "dependencies": {
-    "@mui/base": "5.0.0-beta.8",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
+    "@mui/base": "5.0.0-beta.12",
+    "@mui/icons-material": "^5.14.6",
+    "@mui/material": "^5.14.6",
     "@reduxjs/toolkit": "^1.9.5",
-    "@types/react": "^18.2.20",
+    "@types/react": "^18.2.21",
     "react": "^18.2.0",
     "react-redux-yjs": "workspace:*",
     "security-state": "workspace:*",
     "style": "workspace:*"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.3",
-    "eslint": "^8.45.0",
+    "@types/jest": "^29.5.4",
+    "eslint": "^8.48.0",
     "eslint-config-custom": "workspace:*",
-    "jest": "^29.6.1",
+    "jest": "^29.6.4",
     "ts-jest": "^29.1.1",
     "tsconfig": "workspace:*",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }

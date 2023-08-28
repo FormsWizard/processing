@@ -10,16 +10,16 @@
     "@reduxjs/toolkit": "^1.9.5",
     "material-react-table": "^1.14.0",
     "project-state": "workspace:*",
-    "react-redux": "^8.1.1",
+    "react-redux": "^8.1.2",
+    "react-redux-yjs": "workspace:*",
     "redux": "^4.2.1",
-    "redux-yjs-bindings": "^0.3.1",
-    "react-redux-yjs": "workspace:*"
+    "redux-yjs-bindings": "^0.3.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.197",
-    "eslint": "^8.45.0",
+    "eslint": "^8.48.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }
