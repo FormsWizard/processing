@@ -27,6 +27,7 @@
     "@mui/x-date-pickers": "^6.10.0",
     "@types/react": "^18.2.20",
     "material-react-table": "^1.14.0",
+    "project-state": "workspace:*",
     "state": "workspace:*"
   }
 }

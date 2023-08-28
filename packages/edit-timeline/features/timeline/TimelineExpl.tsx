@@ -11,10 +11,11 @@ import {
   Timeline as TimelineType,
   TimelineItem,
   TimelineOptions,
+  TimelineOptionsItemCallbackFunction
 } from "vis-timeline/types";
 import { useAppSelector, useAppDispatch } from "state";
 import { AppDispatch } from "state";
-import { selectData, setCellData, setRowSelection } from "state";
+import { selectData, setCellData, setRowSelection, Row } from "state";
 
 import mapping from "./example-mapping.json";
 import * as _ from "lodash";
@@ -31,7 +32,7 @@ interface Item extends TimelineItem {
 }
 
 /** Calculate a timeline event from a row of table data **/
-function eventFromRow(row: any, index: number) {
+function eventFromRow(row: Row, index: number) {
   return {
     id: row.id,
     content: _.get(row, mapping.content),
@@ -99,8 +100,8 @@ export function TimelineExpl() {
     [tableData]
   );
 
-  const onMove = useCallback(
-    (item: Item, callback: any) => handleMove(dispatch, item, callback),
+  const onMove: TimelineOptionsItemCallbackFunction = useCallback(
+    (item: TimelineItem, callback: any) => handleMove(dispatch, item as Item, callback),
     [dispatch]
   );
   const onSelect = useCallback(

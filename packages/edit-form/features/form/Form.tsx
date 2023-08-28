@@ -4,6 +4,7 @@ import { JsonForms } from '@jsonforms/react';
 import schema from '../table/example-jsonschema.json';
 
 import { useAppSelector, selectData, selectEditorState, useAppDispatch, setRowData } from 'state';
+import { selectJsonSchema } from 'project-state';
 
 import {
   materialRenderers,
@@ -12,6 +13,7 @@ import {
 
 
 export function Form() {
+  const schema = useAppSelector(selectJsonSchema);
   const tableData = useAppSelector(selectData);
   // @ts-ignore
   const { selectedRows } = useAppSelector(selectEditorState);
@@ -21,12 +23,12 @@ export function Form() {
   const rowData = rowIndex !== null && tableData[rowIndex];
 
   const onChange = useCallback( ({errors, data}: {errors: any[], data: any}) => {
-    if(errors.length === 0) {
-      dispatch(setRowData([rowIndex, data]));
+    if(errors.length === 0 && rowIndex != null) {
+      dispatch(setRowData({row: data, rowIndex}));
     }
   }, [dispatch, rowIndex]);
 
-  return (
+  return !rowData ? <p>For editing, select exactly 1 row.</p> : (
     <JsonForms
       renderers={materialRenderers}
       cells={materialCells}

@@ -1,38 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../state/store";
 import * as _ from "lodash";
-import data from "../example/example-data.json";
 
-type Name = {
-  firstName: string;
-  lastName: string;
-};
-
-export type Person = {
-  name: Name;
-  address: string;
-  state: string;
-  phoneNumber?: string;
-};
+export interface Row extends Object {
+  id: string
+}
 
 export interface DataState {
-  data: Person[];
+  data: Row[];
 }
 
 const initialState: DataState = {
-  data,
+  data: [],
 };
 
 export const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    setTableData: (state, action: PayloadAction<Person[]>) => {
+    setTableData: (state, action: PayloadAction<Row[]>) => {
       state.data = action.payload;
     },
-    setRowData: (state, action: PayloadAction<any>) => {
-      const [rowIndex, newValue] = action.payload;
-      state.data[rowIndex] = newValue;
+    setRowData: (state, action: PayloadAction<{row: Row, rowIndex?: number}>) => {
+      /** `rowIndex` should be used as optional hint for better performance whenever possible **/
+      const {row, rowIndex} = action.payload;
+
+      const checkedRowIndex = rowIndex && state.data[rowIndex].id == row.id ?
+	                        rowIndex :
+				rowIndex && console.error('setRowData failed because of non-matching id!');
+
+      const searchedRowIndex = state.data.findIndex(r => r.id == row.id);
+      const nextRowIndex = state.data.length;
+      state.data[checkedRowIndex || (searchedRowIndex != -1 ? searchedRowIndex : nextRowIndex)] = row;
     },
     setCellData: (state, action: PayloadAction<any>) => {
       const [rowIndex, columnId, newValue] = action.payload;
@@ -41,8 +40,7 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { setTableData, setRowData, setCellData } =
-  dataSlice.actions;
+export const { setTableData, setRowData, setCellData } = dataSlice.actions;
 
 export const selectData = (state: RootState) =>
   // @ts-ignore

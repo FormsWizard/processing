@@ -200,6 +200,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
+      project-state:
+        specifier: workspace:*
+        version: link:../project-state
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -246,6 +249,9 @@ importers:
       material-react-table:
         specifier: ^1.14.0
         version: 1.14.0(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/icons-material@5.14.0)(@mui/material@5.14.0)(react-dom@18.2.0)(react@18.2.0)
+      project-state:
+        specifier: workspace:*
+        version: link:../project-state
       state:
         specifier: workspace:*
         version: link:../state
