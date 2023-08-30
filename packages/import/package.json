@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
-    "build": "tsup index.tsx --format esm --dts",
-    "dev": "npm run build -- --watch"
+    "build": "#tsup index.tsx --format esm --dts",
+    "dev": "#npm run build -- --watch"
   },
   "peerDependencies": {
     "react": "^18.2.0"
@@ -17,9 +17,10 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@types/react": "^18.2.20",
+    "immer": "9.0.21",
     "pgp-provider": "workspace:*",
     "project-state": "workspace:*",
-    "state": "workspace:*",
-    "@types/react": "^18.2.20"
+    "state": "workspace:*"
   }
 }

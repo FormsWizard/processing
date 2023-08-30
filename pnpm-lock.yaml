@@ -390,6 +390,9 @@ importers:
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.20
+      immer:
+        specifier: 9.0.21
+        version: 9.0.21
       pgp-provider:
         specifier: workspace:*
         version: link:../pgp-provider
