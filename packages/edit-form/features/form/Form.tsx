@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
-
 import { JsonForms } from '@jsonforms/react';
-import schema from '../table/example-jsonschema.json';
-
 import { useAppSelector, selectData, selectEditorState, useAppDispatch, setRowData } from 'state';
-import { selectJsonSchema } from 'project-state';
+import { selectJsonSchema, selectUiSchema } from 'project-state';
 
 import {
   materialRenderers,
@@ -14,6 +11,7 @@ import {
 
 export function Form() {
   const schema = useAppSelector(selectJsonSchema);
+  const uiSchema = useAppSelector(selectUiSchema);
   const tableData = useAppSelector(selectData);
   // @ts-ignore
   const { selectedRows } = useAppSelector(selectEditorState);
@@ -33,6 +31,7 @@ export function Form() {
       renderers={materialRenderers}
       cells={materialCells}
       schema={schema}
+      uischema={uiSchema}
       data={rowData}
       onChange={onChange}
     />

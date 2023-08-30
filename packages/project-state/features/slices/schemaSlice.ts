@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../state/store";
-import { JsonSchema } from '@jsonforms/core'
+import { JsonSchema, UISchemaElement } from '@jsonforms/core'
 
 export interface SchemaState {
   jsonSchema?: JsonSchema
-  uiSchema?: any
+  uiSchema?: UISchemaElement
 }
 
 const initialState: SchemaState = {
@@ -18,6 +18,12 @@ export const schemaSlice = createSlice({
   reducers: {
     setJsonSchema: (state: SchemaState, action: PayloadAction<JsonSchema>) => {
       state.jsonSchema = action.payload;
+    },
+    setUiSchema: (state: SchemaState, action: PayloadAction<UISchemaElement>) => {
+      state.uiSchema = action.payload;
+    },
+    setSchemaState: (state: SchemaState, action: PayloadAction<SchemaState>) => {
+      state = {...state, ...action.payload};
     }
   }
 });
