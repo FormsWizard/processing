@@ -20,18 +20,10 @@ export const syncServerWebrtcPresets: SyncServerWebrtcPreset[] = [
 	   body: <>You will have to start the server yourself with the following command: <i>`./node_modules/y-webrtc/bin/server.js`</i></>
          }
   },
-  { env: SERVER.local,
-    settings: { signaling: ['ws://localhost:5555'] },
-    _ui: { icon: Computer,
-           title: 'Local signaling',
-	   subtitle: 'Port 5555, without tls',
-	   body: <>You will have to start the server yourself with the following command: <i>`PORT=5555 ./node_modules/y-webrtc/bin/server.js`</i></>
-         }
-  },
-  { env: SERVER.limited,
-    settings: { signaling: ['wss://yjs.winzlieb.eu'] },  // TODO a working server
+  { env: SERVER.trusted,
+    settings: { signaling: ['wss://yjs.winzlieb.eu'] },
     _ui: { title: 'Public signaling',
-           subtitle: 'Y-Webrtc servers',
+           subtitle: 'with tls',
            icon: Cloud,
 	   body: <>No additional effort required.</>
          }

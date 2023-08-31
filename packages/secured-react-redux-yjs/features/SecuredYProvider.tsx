@@ -20,16 +20,16 @@ export function SecuredYProvider({children, store}: PropsWithChildren<Props>) {
                                                                 websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}},
                                                    {store, slice: 'schema', logging: true,  // TODO
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO1'}},
-                                                                websocket: {url: 'ws://localhost:1234'}}},
+                                                                                   password: 'TODO'}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}},
                                                    {store, slice: 'keys', logging: true,
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO2'}},
-                                                                websocket: {url: 'ws://localhost:1234'}}},
+                                                                                   password: 'TODO'}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}},
                                                    {store, slice: 'cryptedData', logging: true,
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO3'}},
-                                                                websocket: {url: 'ws://localhost:1234'}}} ]}
+                                                                                   password: 'TODO'}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}} ]}
 
   return (
     <YProvider initialYState={initialYState}>

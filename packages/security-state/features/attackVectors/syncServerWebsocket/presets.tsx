@@ -21,19 +21,11 @@ export const syncServerWebsocketPresets: SyncServerWebsocketPreset[] = [
          }
   },
   { env: SERVER.limited,
-    settings: { url: 'wss://yjs-websocket.winzlieb.eu' },  // TODO a working server
+    settings: { url: 'wss://mqtt.afg.mission-lifeline.de' },
     _ui: { title: 'Public Websocket',
            subtitle: 'with tls',
            icon: Cloud,
 	   body: <>No additional effort required.</>
-         }
-  },
-  { env: SERVER.untrusted,
-    settings: { url: 'ws://yjs-websocket.winzlieb.eu:1234' },  // TODO delete after test&demo
-    _ui: { title: 'Public Websocket',
-           subtitle: 'without tls',
-           icon: Cloud,
-	   body: <>Insecure! For testing only!!!</>
          }
   }
 ];
