@@ -2,12 +2,11 @@ import { useCallback } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { useAppSelector, selectData, selectEditorState, useAppDispatch, setRowData } from 'state';
 import { selectJsonSchema, selectUiSchema } from 'project-state';
-
 import {
   materialRenderers,
   materialCells,
 } from '@jsonforms/material-renderers';
-
+import { basicRenderer } from '@formswizard/designer-basic-renderer';
 
 export function Form() {
   const schema = useAppSelector(selectJsonSchema);
@@ -28,7 +27,7 @@ export function Form() {
 
   return !rowData ? <p>For editing, select exactly 1 row.</p> : (
     <JsonForms
-      renderers={materialRenderers}
+      renderers={[...materialRenderers, ...basicRenderer]}
       cells={materialCells}
       schema={schema}
       uischema={uiSchema}
