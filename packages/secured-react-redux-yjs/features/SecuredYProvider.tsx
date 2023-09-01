@@ -10,6 +10,9 @@ interface Props {
 export function SecuredYProvider({children, store}: PropsWithChildren<Props>) {
   const securityState = useSecurityStateContext();
 
+  const hash = typeof location != 'undefined' ? location.hash.slice(1) : '';
+  const hashParameters = !hash ? {} : Object.fromEntries(new URLSearchParams(hash) as any);
+
   const initialYState: Partial<YState> = {slices: [{store, slice: 'data', //logging: true,
                                                     providers: {webrtc: {options: {signaling: securityState.syncServerSessionWebrtc.settings.signaling,  // TOOD till now all need share the same
                                                                                    password: securityState.syncServerDataWebrtc.settings.password}},
@@ -20,16 +23,19 @@ export function SecuredYProvider({children, store}: PropsWithChildren<Props>) {
                                                                 websocket: {url: securityState.syncServerSessionWebsocket.settings.url}}},
                                                    {store, slice: 'schema', logging: true,  // TODO
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO'}},
-                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}},
+                                                                                   password: hashParameters.formId}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de',
+								            room: hashParameters.formId}}},
                                                    {store, slice: 'keys', logging: true,
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO'}},
-                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}},
+                                                                                   password: hashParameters.formId}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de',
+								            room: hashParameters.formId}}},
                                                    {store, slice: 'cryptedData', logging: true,
                                                     providers: {webrtc: {options: {signaling: ['wss://yjs.winzlieb.eu'],
-                                                                                   password: 'TODO'}},
-                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de'}}} ]}
+                                                                                   password: hashParameters.formId}},
+                                                                websocket: {url: 'wss://mqtt.afg.mission-lifeline.de',
+								            room: hashParameters.formId}}}  ]}
 
   return (
     <YProvider initialYState={initialYState}>

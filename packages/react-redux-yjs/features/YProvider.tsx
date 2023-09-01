@@ -106,6 +106,7 @@ export function YConfigurator() {
   useEffect(
     () => {
       if(yContext) {
+	//console.log({yContext})
         const destructors = yContext?.slices?.map( sliceState => configureSlice(sliceState) );
 	//setYContext(yContext);
         // TODO use dispatch to set updated sliceStates?
