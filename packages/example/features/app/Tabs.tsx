@@ -1,4 +1,4 @@
-import { TimelineExpl } from 'edit-timeline';
+import { Timeline } from 'edit-timeline';
 
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -13,7 +13,7 @@ const notYetImplemented = <p>Not Yet Implemented</p>;
 export const tabs = [
   {icon: <PlaceIcon/>, label: "Map", content: notYetImplemented},
   {icon: <CalendarMonthIcon/>, label: "Calendar", content: notYetImplemented},
-  {icon: <AccessTimeIcon/>, label: "Timeline", content: <TimelineExpl/>},
+  {icon: <AccessTimeIcon/>, label: "Timeline", content: <Timeline/>},
   {icon: <ViewWeekIcon/>, label: "Kanban", content: notYetImplemented},
   {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
   {icon: <HubIcon/>, label: "Network", content: notYetImplemented},

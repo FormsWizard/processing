@@ -1,4 +1,6 @@
 import { useCallback, useMemo } from "react";
+import { selectJsonSchema, selectUiSchema } from 'project-state';
+import { schema2mapping } from './schema2mapping';
 
 // @ts-ignore
 // import Timeline from "react-visjs-timeline";
@@ -16,10 +18,7 @@ import {
 import { useAppSelector, useAppDispatch } from "state";
 import { AppDispatch } from "state";
 import { selectData, setCellData, setRowSelection, Row } from "state";
-
-import mapping from "./example-mapping.json";
 import * as _ from "lodash";
-
 import { Moment } from 'moment';
 
 // TODO: - Zeitspanne interaktiv aendern, rechtsklick evtl, event loeschen, neues Event anlegen, Name im Timetable editieren, sortieren in Timeline nach typeVar (groupings),
@@ -29,18 +28,6 @@ interface Item extends TimelineItem {
   start: DateType&Moment;
   end: DateType&Moment;
   _rowIdx: number;
-}
-
-/** Calculate a timeline event from a row of table data **/
-function eventFromRow(row: Row, index: number) {
-  return {
-    id: row.id,
-    content: _.get(row, mapping.content),
-    start: _.get(row, mapping.start),
-    end: _.get(row, mapping.end),
-    _rowIdx:
-      index /** by keeping the index, during updates we save an O(n) lookup that would be required using the id **/,
-  };
 }
 
 const defaultOptions: TimelineOptions = {
@@ -53,25 +40,6 @@ const defaultOptions: TimelineOptions = {
   multiselect: true,
   timeAxis: { scale: "month", step: 1 },
 };
-
-/** Creates an onMove callback to update table data when timeline item was moved.
- *  The time is stored in format of html-input of type datetime-local
- **/
-function handleMove(dispatch: AppDispatch, item: Item, callback: any) {
-  console.log(item);
-  /** TODO we could use a reducer, that is setting both dates in one dispatch **/
-  dispatch(
-    setCellData([
-      item._rowIdx,
-      mapping.start,
-      item.start?.toISOString().slice(0, 19),
-    ])
-  );
-  dispatch(
-    setCellData([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
-  );
-  callback(item);
-}
 
 function handleSelect(
   dispatch: AppDispatch,
@@ -86,9 +54,28 @@ function handleSelect(
   dispatch(setRowSelection(selectedRows));
 }
 
-export function TimelineExpl() {
+export function Timeline() {
   const tableData = useAppSelector(selectData);
   const dispatch = useAppDispatch();
+
+  const jsonSchema = useAppSelector(selectJsonSchema);
+  const uiSchema = useAppSelector(selectUiSchema);
+
+  const mapping = useMemo(
+    () => jsonSchema && schema2mapping(jsonSchema, uiSchema),
+    [jsonSchema, uiSchema],
+  );
+
+  /** Calculate a timeline event from a row of table data **/
+  const eventFromRow = useCallback( (row: Row, index: number) => (
+    {
+      id: row.id,
+      content: _.get(row, mapping.content),
+      start: _.get(row, mapping.start),
+      end: _.get(row, mapping.end),
+      _rowIdx: index /** by keeping the index, during updates we save an O(n) lookup that would be required using the id **/,
+    }
+  ), [mapping])
 
   const items = useMemo(
     () =>
@@ -99,6 +86,23 @@ export function TimelineExpl() {
         ) /** entries with missing start are not valid **/,
     [tableData]
   );
+  console.log({tableData, mapping, items})
+
+  const handleMove = useCallback( (dispatch: AppDispatch, item: Item, callback: any) => {
+    /** TODO we could use a reducer, that is setting both dates in one dispatch **/
+    dispatch(
+      setCellData([
+        item._rowIdx,
+        mapping.start,
+        item.start?.toISOString().slice(0, 19),
+      ])
+    );
+    dispatch(
+      setCellData([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
+    );
+    callback(item);
+  } ,[mapping])
+
 
   const onMove: TimelineOptionsItemCallbackFunction = useCallback(
     (item: TimelineItem, callback: any) => handleMove(dispatch, item as Item, callback),

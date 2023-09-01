@@ -19,6 +19,7 @@
     "@types/react": "^18.2.21",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "project-state": "workspace:*",
     "state": "workspace:*",
     "vis-data": "^7.1.6",
     "vis-timeline": "^7.7.2",

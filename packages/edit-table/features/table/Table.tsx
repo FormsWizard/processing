@@ -7,7 +7,7 @@ import * as _ from 'lodash'
 import { useAppSelector, useAppDispatch } from 'state';
 import { selectData, setCellData, selectEditorState, setRowSelection, Row } from 'state';
 
-import { selectJsonSchema } from 'project-state';
+import { selectJsonSchema, selectUiSchema } from 'project-state';
 import { schema2columns } from './schema2columns';
 
 export const Table = () => {
@@ -18,9 +18,10 @@ export const Table = () => {
   const dispatch = useAppDispatch();
 
   const jsonSchema = useAppSelector(selectJsonSchema);
+  const uiSchema = useAppSelector(selectUiSchema);
   const columns = useMemo(
-    () => jsonSchema && schema2columns(jsonSchema),
-    [jsonSchema],
+    () => jsonSchema && schema2columns(jsonSchema, uiSchema),
+    [jsonSchema, uiSchema],
   );
 
   const handleSaveCell = (cell: MRT_Cell<Row>, value: any) => {

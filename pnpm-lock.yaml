@@ -283,6 +283,9 @@ importers:
       moment:
         specifier: ^2.29.4
         version: 2.29.4
+      project-state:
+        specifier: workspace:*
+        version: link:../project-state
       state:
         specifier: workspace:*
         version: link:../state

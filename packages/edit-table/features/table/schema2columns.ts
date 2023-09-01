@@ -1,4 +1,4 @@
-import { JsonSchema } from '@jsonforms/core'
+import { JsonSchema, UISchemaElement } from '@jsonforms/core'
 
 function upperCaseWord(s: string) {
   return s.slice(0,1).toUpperCase() + s.slice(1)
@@ -20,12 +20,11 @@ type Column = {
   columns?: Column[]
 }
 
-function property2column([key, schema]: [key: string, schema: JsonSchema],
-			 prefix: string): Column {
+function property2column({key, subJsonSchema, prefix, uiSchema}: {key: string, subJsonSchema: JsonSchema, prefix: string, uiSchema?: UISchemaElement}): Column {
   const accessorKey = prefix == '' ? key : prefix + '.' + key;
 
   const muiTableBodyCellEditTextFieldProps = {
-    type: schema.type == "string" && schema.format == "date-time" ? "datetime-local" : undefined
+    type: subJsonSchema.type == "string" && subJsonSchema.format == "date-time" ? "datetime-local" : undefined
   }
 
   const common = {
@@ -34,23 +33,24 @@ function property2column([key, schema]: [key: string, schema: JsonSchema],
     ...notOnlyUndefined({muiTableBodyCellEditTextFieldProps})
   }
 
-  switch(schema.type) {
+  switch(subJsonSchema.type) {
     case "object":
       return {
 	...common,
-	columns: Object.entries(schema.properties||{})
-	         .map(([key, property]) => property2column([key, property], accessorKey))
+	columns: Object.entries(subJsonSchema.properties||{})
+	         .map(([key, property]) => property2column({key, subJsonSchema: property, prefix: accessorKey, uiSchema}))
       }
     default:
       return common
   }
 }
 
-export function schema2columns(schema: JsonSchema, prefix='') {
+export function schema2columns(schema: JsonSchema, uiSchema?: UISchemaElement, prefix='') {
+  console.log({schema, uiSchema})
   switch(schema.type) {
     case "object":
       return Object.entries(schema.properties||{})
-             .map(KeyAndProperty => property2column(KeyAndProperty, prefix))
+             .map(([key, subJsonSchema]) => property2column({key, subJsonSchema, prefix, uiSchema}))
     default:
       console.error('Schema is expected to be of type object!', schema)
       return
