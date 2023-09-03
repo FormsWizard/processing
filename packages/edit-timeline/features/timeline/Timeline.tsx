@@ -68,7 +68,7 @@ export function Timeline() {
 
   /** Calculate a timeline event from a row of table data **/
   const eventFromRow = useCallback( (row: Row, index: number) => (
-    {
+    mapping && {
       id: row.id,
       content: _.get(row, mapping.content),
       start: _.get(row, mapping.start),
@@ -82,7 +82,7 @@ export function Timeline() {
       tableData
         .map(eventFromRow)
         .filter(
-          (event) => event.start
+          (event) => event && event.start
         ) /** entries with missing start are not valid **/,
     [tableData]
   );
@@ -90,14 +90,10 @@ export function Timeline() {
 
   const handleMove = useCallback( (dispatch: AppDispatch, item: Item, callback: any) => {
     /** TODO we could use a reducer, that is setting both dates in one dispatch **/
-    dispatch(
-      setCellData([
-        item._rowIdx,
-        mapping.start,
-        item.start?.toISOString().slice(0, 19),
-      ])
+    mapping && dispatch(
+      setCellData([item._rowIdx, mapping.start, item.start?.toISOString().slice(0, 19)])
     );
-    dispatch(
+    mapping && dispatch(
       setCellData([item._rowIdx, mapping.end, item.end?.toISOString().slice(0, 19)])
     );
     callback(item);
@@ -110,7 +106,7 @@ export function Timeline() {
   );
   const onSelect = useCallback(
     (selectionArgs: { items: number[] }) =>
-      handleSelect(dispatch, selectionArgs, items),
+      items && handleSelect(dispatch, selectionArgs, items),
     [dispatch, items]
   );
 
@@ -119,7 +115,7 @@ export function Timeline() {
     ...defaultOptions,
   };
 
-  return (
+  return items && (
     <div>
       <VisTimelineWrapper options={options} items={items} onSelect={onSelect} />
     </div>
