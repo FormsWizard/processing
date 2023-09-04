@@ -7,6 +7,9 @@ import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import HubIcon from '@mui/icons-material/Hub';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import LogoDevIcon from '@mui/icons-material/LogoDev';
+
+import { config } from '@formswizard/processing-config';
 
 const notYetImplemented = <p>Not Yet Implemented</p>;
 
@@ -17,5 +20,6 @@ export const tabs = [
   {icon: <ViewWeekIcon/>, label: "Kanban", content: notYetImplemented},
   {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
   {icon: <HubIcon/>, label: "Network", content: notYetImplemented},
-  {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented}
-];
+  {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented},
+  config.developerMode && {icon: <LogoDevIcon/>, label: "Dev", content: notYetImplemented}
+].filter(t => t);

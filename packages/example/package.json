@@ -18,6 +18,7 @@
     "edit-form": "workspace:*",
     "edit-table": "workspace:*",
     "edit-timeline": "workspace:*",
+    "@formswizard/processing-config": "workspace:*",
     "import": "workspace:*",
     "layout": "workspace:*",
     "react": "^18.2.0",

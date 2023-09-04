@@ -1,0 +1,23 @@
+{
+  "name": "@formswizard/processing-config",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "build": "tsup index.ts --format esm --dts",
+    "dev": "npm run build -- --watch"
+  },
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+  }
+}
