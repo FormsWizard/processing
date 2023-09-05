@@ -26,6 +26,7 @@
     "secured-react-redux-yjs": "workspace:*",
     "security-state": "workspace:*",
     "state": "workspace:*",
+    "project-state": "workspace:*",
     "style": "workspace:*"
   },
   "devDependencies": {

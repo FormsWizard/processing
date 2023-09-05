@@ -1,4 +1,5 @@
 import { Timeline } from 'edit-timeline';
+import { Debug } from './Debug';
 
 import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -21,5 +22,5 @@ export const tabs = [
   {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
   {icon: <HubIcon/>, label: "Network", content: notYetImplemented},
   {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented},
-  config.developerMode && {icon: <LogoDevIcon/>, label: "Dev", content: notYetImplemented}
+  config.developerMode && {icon: <LogoDevIcon/>, label: "Dev", content: <Debug/>}
 ].filter(t => t);
