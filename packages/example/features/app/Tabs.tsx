@@ -22,5 +22,5 @@ export const tabs = [
   {icon: <ViewTimelineIcon/>, label: "Gantt", content: notYetImplemented},
   {icon: <HubIcon/>, label: "Network", content: notYetImplemented},
   {icon: <BarChartIcon/>, label: "Chart", content: notYetImplemented},
-  config.developerMode && {icon: <LogoDevIcon/>, label: "Dev", content: <Debug/>}
+  ...(config.developerMode ? [{icon: <LogoDevIcon/>, label: "Dev", content: <Debug/>}] : [])
 ].filter(t => t);

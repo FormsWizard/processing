@@ -16,6 +16,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@jsonforms/core": "^3.1.0",
     "@types/react": "^18.2.21",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

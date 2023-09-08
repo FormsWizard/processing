@@ -292,6 +292,9 @@ importers:
 
   packages/edit-timeline:
     dependencies:
+      '@jsonforms/core':
+        specifier: ^3.1.0
+        version: 3.1.0
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21

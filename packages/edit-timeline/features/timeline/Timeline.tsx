@@ -77,13 +77,14 @@ export function Timeline() {
     }
   ), [mapping])
 
-  const items = useMemo(
+  const items: Item[] = useMemo(
     () =>
       tableData
         .map(eventFromRow)
         .filter(
           (event) => event && event.start
-        ) /** entries with missing start are not valid **/,
+        ) /** entries with missing start are not valid **/
+	.map(event => event as Item),
     [tableData]
   );
   console.log({tableData, mapping, items})
