@@ -427,8 +427,8 @@ importers:
   packages/import:
     dependencies:
       '@formswizard/api':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
@@ -2564,8 +2564,8 @@ packages:
   /@floating-ui/utils@0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
 
-  /@formswizard/api@0.0.4:
-    resolution: {integrity: sha512-TytNK5kBlnRRbf4VAbM47cGVNjrnx+lNgG1/OvoTciPVySn5/7xyvn8K18z5SyxExqIuYO8ZwT+/FP4d0dL3Ig==}
+  /@formswizard/api@0.2.0:
+    resolution: {integrity: sha512-r8thJUz5oeUZ1q1ryc90riKG9ciTh08zWualSxzVPZAikBIJOrsXasW6zQ6mw/K1Aqroynzhd1Ee10HK6ErNuA==}
     dev: false
 
   /@formswizard/designer-basic-renderer@0.0.2(@jsonforms/core@3.1.0)(@jsonforms/material-renderers@3.1.0)(@jsonforms/react@3.1.0)(@mui/icons-material@5.14.6)(@mui/material@5.14.6)(react@18.2.0):

@@ -17,7 +17,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@formswizard/api": "^0.0.4",
+    "@formswizard/api": "^0.2.0",
     "@types/react": "^18.2.21",
     "pgp-provider": "workspace:*",
     "project-state": "workspace:*",

@@ -8,14 +8,22 @@ import { DefaultService, OpenAPI } from '@formswizard/api';
 OpenAPI.BASE = 'http://localhost:4000';
 const { getProjectStateCryptedData, getProjectStateSchema } = DefaultService;
 
+function useFormId() {
+  const hash = typeof location != 'undefined' ? location.hash.slice(1) : '';
+  const hashParameters = !hash ? {} : Object.fromEntries(new URLSearchParams(hash) as any);
+  const { formId } = hashParameters;
+  return formId
+}
+
 export function DecryptAndImportLastNewSubmission() {
   const dispatch = useAppDispatch();
+  const formId = useFormId();
   const jsonSchema = useAppSelector(selectJsonSchema);
 
   const cryptedData = useAppSelector(selectCryptedData);
   useEffect( () => {
     async function loadCryptedData() {
-      const { cryptedData } = await getProjectStateCryptedData();
+      const { cryptedData } = await getProjectStateCryptedData(formId);
       const latestCryptedDatum = cryptedData?.length && cryptedData[cryptedData.length-1];
       latestCryptedDatum && dispatch(setCryptedData(latestCryptedDatum));
     }
@@ -39,11 +47,13 @@ export function DecryptAndImportLastNewSubmission() {
 
 export function useSchema() {
   const dispatch = useAppDispatch();
+  const formId = useFormId();
   const jsonSchema = useAppSelector(selectJsonSchema);
   const uiSchema = useAppSelector(selectUiSchema);
+
   useEffect(() => {
     async function loadSchema() {
-      const { schema } = await getProjectStateSchema();
+      const { schema } = await getProjectStateSchema(formId);
       const { jsonSchema, uiSchema } = schema || {};
       jsonSchema && dispatch(setJsonSchema(jsonSchema))
       jsonSchema && dispatch(setUiSchema(uiSchema))
