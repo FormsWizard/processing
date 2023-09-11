@@ -2,6 +2,7 @@ import { SyncServerWebsocketPreset } from './presets.model';
 import { SERVER } from '../../model/environment/model';
 import { SYNC_enabled } from '../../model/config/sync/model';
 import { CloudOff, Computer, Cloud } from '@mui/icons-material';
+import { config } from '@formswizard/config';
 
 export const syncServerWebsocketPresets: SyncServerWebsocketPreset[] = [
   { env: SERVER.trusted,
@@ -21,11 +22,11 @@ export const syncServerWebsocketPresets: SyncServerWebsocketPreset[] = [
          }
   },
   { env: SERVER.limited,
-    settings: { url: 'wss://mqtt.afg.mission-lifeline.de' },
+    settings: { url: config.server.ws },
     _ui: { title: 'Public Websocket',
            subtitle: 'with tls',
            icon: Cloud,
-	   body: <>No additional effort required.</>
+	   body: <>Configured by the environment variable NEXT_PUBLIC_WS</>
          }
   }
 ];

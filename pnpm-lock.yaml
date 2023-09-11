@@ -165,24 +165,6 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9
 
-  packages/config:
-    devDependencies:
-      '@types/node':
-        specifier: ^20.5.7
-        version: 20.5.7
-      eslint:
-        specifier: ^8.48.0
-        version: 8.48.0
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
   packages/edit-form:
     dependencies:
       '@emotion/react':
@@ -359,9 +341,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.21)(react@18.2.0)
-      '@formswizard/processing-config':
-        specifier: workspace:*
-        version: link:../config
+      '@formswizard/config':
+        specifier: ^0.2.1
+        version: 0.2.1
       '@mui/base':
         specifier: 5.0.0-beta.12
         version: 5.0.0-beta.12(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
@@ -427,8 +409,8 @@ importers:
   packages/import:
     dependencies:
       '@formswizard/api':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.2.1
+        version: 0.2.1
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
@@ -705,6 +687,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.21)(react@18.2.0)
+      '@formswizard/config':
+        specifier: ^0.2.1
+        version: 0.2.1
       '@mui/base':
         specifier: 5.0.0-beta.12
         version: 5.0.0-beta.12(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2564,8 +2549,14 @@ packages:
   /@floating-ui/utils@0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
 
-  /@formswizard/api@0.2.0:
-    resolution: {integrity: sha512-r8thJUz5oeUZ1q1ryc90riKG9ciTh08zWualSxzVPZAikBIJOrsXasW6zQ6mw/K1Aqroynzhd1Ee10HK6ErNuA==}
+  /@formswizard/api@0.2.1:
+    resolution: {integrity: sha512-f8wRzNd8QcrCirIw7OYqVb/r7dakWi3SJAyqBQgIVLPx2rM0NwxHhNmz+PbpS+a6+m2mde0QLgsi7hjt9IQGVA==}
+    dependencies:
+      '@formswizard/config': 0.2.1
+    dev: false
+
+  /@formswizard/config@0.2.1:
+    resolution: {integrity: sha512-pwpVy28z+LzC8+eYKHYKc8pezeM2wy+++hXcQ3jrm/fWQkLnQw0d0opFZMNHR5YHCeZuGPnV6YebhVQk2qxaLA==}
     dev: false
 
   /@formswizard/designer-basic-renderer@0.0.2(@jsonforms/core@3.1.0)(@jsonforms/material-renderers@3.1.0)(@jsonforms/react@3.1.0)(@mui/icons-material@5.14.6)(@mui/material@5.14.6)(react@18.2.0):

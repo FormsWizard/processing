@@ -3,10 +3,7 @@ import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch, setRowData } from 'state';
 import { selectJsonSchema, selectCryptedData, setCryptedData, selectUiSchema, setJsonSchema, setUiSchema } from 'project-state';
 import { PGPProvider, decryptUsingContext } from 'pgp-provider';
-import { DefaultService, OpenAPI } from '@formswizard/api';
-
-OpenAPI.BASE = 'http://localhost:4000';
-const { getProjectStateCryptedData, getProjectStateSchema } = DefaultService;
+import { api } from '@formswizard/api';
 
 function useFormId() {
   const hash = typeof location != 'undefined' ? location.hash.slice(1) : '';
@@ -23,7 +20,7 @@ export function DecryptAndImportLastNewSubmission() {
   const cryptedData = useAppSelector(selectCryptedData);
   useEffect( () => {
     async function loadCryptedData() {
-      const { cryptedData } = await getProjectStateCryptedData(formId);
+      const { cryptedData } = await api.getProjectStateCryptedData(formId);
       const latestCryptedDatum = cryptedData?.length && cryptedData[cryptedData.length-1];
       latestCryptedDatum && dispatch(setCryptedData(latestCryptedDatum));
     }
@@ -53,7 +50,7 @@ export function useSchema() {
 
   useEffect(() => {
     async function loadSchema() {
-      const { schema } = await getProjectStateSchema(formId);
+      const { schema } = await api.getProjectStateSchema(formId);
       const { jsonSchema, uiSchema } = schema || {};
       jsonSchema && dispatch(setJsonSchema(jsonSchema))
       jsonSchema && dispatch(setUiSchema(uiSchema))
