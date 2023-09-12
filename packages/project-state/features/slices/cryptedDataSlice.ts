@@ -2,13 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../state/store";
 
 type ArmoredPGPMessage = string;
-type UUID = string;
 type PGPID = string;
 type ArmoredPubKey = string;
 
 export interface CryptedData {
   data: ArmoredPGPMessage
-  uuid: UUID,
+  id: string,
   keyId: PGPID,
   armoredPublicKey: ArmoredPubKey
 }

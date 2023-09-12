@@ -409,8 +409,8 @@ importers:
   packages/import:
     dependencies:
       '@formswizard/api':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.4
+        version: 0.2.4
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
@@ -2549,8 +2549,8 @@ packages:
   /@floating-ui/utils@0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
 
-  /@formswizard/api@0.2.1:
-    resolution: {integrity: sha512-f8wRzNd8QcrCirIw7OYqVb/r7dakWi3SJAyqBQgIVLPx2rM0NwxHhNmz+PbpS+a6+m2mde0QLgsi7hjt9IQGVA==}
+  /@formswizard/api@0.2.4:
+    resolution: {integrity: sha512-nOvsk1AtqGjMskZCEI/GdjmWyXvYHWEkldl6KasFG6sVQiLyPufoCW8f5xKe4f6hZarvuU+IcBu1EOC/+1pZaw==}
     dependencies:
       '@formswizard/config': 0.2.1
     dev: false

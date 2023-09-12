@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch, setRowData } from 'state';
-import { selectJsonSchema, selectCryptedData, setCryptedData, selectUiSchema, setJsonSchema, setUiSchema } from 'project-state';
+import { selectJsonSchema, selectCryptedData, setCryptedData, selectUiSchema, setJsonSchema, setUiSchema, CryptedData } from 'project-state';
 import { PGPProvider, decryptUsingContext } from 'pgp-provider';
 import { api } from '@formswizard/api';
 
@@ -30,12 +30,13 @@ export function DecryptAndImportLastNewSubmission() {
 
   /** TODO: Delete decrypted dataset after import and loop over submissions **/
 
-  const { data, uuid, keyId, armoredPublicKey } = cryptedData[cryptedData.length-1] || {};
+  const cryptedDatum = cryptedData[cryptedData.length-1] || {} as CryptedData;
+  const { id, data, keyId, armoredPublicKey } = cryptedDatum
   const decrypted_str = decryptUsingContext(data);
   const decrypted = decrypted_str && JSON.parse(decrypted_str);
 
   useEffect( () => {
-    const row = { ...decrypted, id: uuid, uuid, keyId, armoredPublicKey }
+    const row = { ...decrypted, id, keyId, armoredPublicKey }
     decrypted && dispatch(setRowData({row}));
   }, [decrypted]);
 
