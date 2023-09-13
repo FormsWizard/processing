@@ -98,22 +98,35 @@ export function encryptUsingContext(text: string, armoredPubKeys?: string[]) {
   return encrypted;
 };
 
-export function decryptUsingContext(armoredMessage?: string) {
+export function useDecryptUsingContext() {
   const {privateKey: decryptionKeys} = useKeyContext();
+
+  async function decrypt(armoredMessage: string) {
+    if(decryptionKeys) {
+      const message = await readMessage({ armoredMessage });
+      const decrypted = (await pgp_decrypt({ message, decryptionKeys })
+                               .catch(e => { console.error('Decryption failed. Do you have a correct privateKey?')
+                                             console.warn(e) })
+			)?.data.toString()
+      return decrypted
+    }
+  };
+  return decrypt
+}
+
+export function decryptUsingContext(armoredMessage?: string) {
+  const decrypt = useDecryptUsingContext();
   const [decrypted, setDecrypted] = useState<string>();
 
   useEffect(() => {
     const asyncEffect = async () => {
-      if(decryptionKeys && armoredMessage) {
-        const message = await readMessage({ armoredMessage });
-        pgp_decrypt({ message, decryptionKeys })
-	.then(x => setDecrypted(x.data.toString()))
-	.catch(e => { console.error('Decryption failed. Do you have a correct privateKey?')
-                      console.warn(e) })
+      if(armoredMessage) {
+	const decrypted = await decrypt(armoredMessage);
+	decrypted && setDecrypted(decrypted)
       }
     };
     asyncEffect();
-  }, [armoredMessage, decryptionKeys, setDecrypted]);
+  }, [armoredMessage, setDecrypted]);
 
   return decrypted;
 };
