@@ -2,14 +2,7 @@
 
 ## Open a Demo
 
-Run the following command:
-
-```sh
-pnpm export
-(cd apps/demo/out/; python -m http.server) & 
-xdg-open http://localhost:8000
-```
-
+For a first public demo, you can try our main app: https://formswizard.github.io/formswizard/new
 
 ## Apps and Packages
 
@@ -93,6 +86,13 @@ To build all apps and packages, run:
 
 ```sh
 pnpm build
+```
+
+Than you should be able to serve it with an arbitrary webserver:
+
+```sh
+(cd apps/demo/out/; python -m http.server) & 
+xdg-open http://localhost:8000
 ```
 
 ## Develop
